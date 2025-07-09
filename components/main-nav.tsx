@@ -155,16 +155,16 @@ export function MainNav() {
           )}
         </Link>
         <Link
-          href="https://premium.easyui.pro/"
+          href="/premium"
           className={cn(
-            "relative py-1 transition-colors hover:text-foreground/80 flex items-center",
-            isActive("https://premium.easyui.pro/")
-              ? "text-foreground font-medium"
+            "flex items-center text-sm font-medium transition-colors hover:text-foreground/80",
+            isActive("/premium")
+              ? "text-foreground"
               : "text-foreground/60"
           )}
         >
-          Premium Templates <Icons.externalLink className="ml-2 size-4" />
-          {isActive("https://premium.easyui.pro/") && (
+          Premium Templates
+          {isActive("/premium") && (
             <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" />
           )}
         </Link>

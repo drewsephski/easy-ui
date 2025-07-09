@@ -6,7 +6,7 @@
 </p>
 <div align="center">
   <a href="https://github.com/DarkInventor/easy-ui/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/DarkInventor/easy-ui"></a>
-  <a href="https://twitter.com/kathanmehtaa"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/kathanmehtaa"></a>
+  <a href="https://twitter.com/drew"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/drew"></a>
   <a href="https://github.com/DarkInventor/easy-ui/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
   <a href="https://discord.gg/9PZpwYXA"><img alt="Discord" src="https://img.shields.io/discord/1267194703439462502"></a>
 </div>
@@ -21,7 +21,7 @@ Visit https://www.easyui.pro/templates to view the templates.
 Visit our [contributing guide](https://github.com/DarkInventor/easy-ui/blob/main/CONTRIBUTING.md) to learn how to contribute. It only takes ~5 minutes to add your own!
 
 ## Let's talk
-<a href="https://cal.com/kathan/30min"><img alt="Book us with Cal.com" src="https://cal.com/book-with-cal-dark.svg" /></a>
+<a href="https://cal.com/drew/30min"><img alt="Book us with Cal.com" src="https://cal.com/book-with-cal-dark.svg" /></a>
 
 ## Authors
 

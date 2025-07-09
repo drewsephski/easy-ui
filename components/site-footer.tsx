@@ -14,14 +14,13 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           <p className="text-center text-sm leading-loose md:text-left">
             Brought to you by{" "}
             <a
-              href={siteConfig.links.twitter}
+              href={siteConfig.links.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              kathan.
+              drewsephski
             </a>
-            
           </p>
         </div>
         {/* <ModeToggle /> */}

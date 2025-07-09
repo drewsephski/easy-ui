@@ -82,17 +82,17 @@
 //   }
 
 //   return (
-//     <section className="container px-4 sm:px-6 md:px-8 py-7  mx-auto max-w-6xl leading-7 tracking-tight">
-//       <div className="text-center mb-12">
-//         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 tracking-tight">
+//     <section className="container px-4 py-7 mx-auto max-w-6xl tracking-tight leading-7 sm:px-6 md:px-8">
+//       <div className="mb-12 text-center">
+//         <h1 className="mb-6 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
 //           Simple pricing for<br className="hidden sm:block" /> everyone.
 //         </h1>
-//         <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto">
+//         <p className="mx-auto max-w-4xl text-lg sm:text-xl text-muted-foreground">
 //           Choose an <span className="font-semibold text-foreground">affordable plan</span> that's packed with the best features for engaging your audience, creating customer loyalty, and driving sales.
 //         </p>
 //       </div>
 
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 leading-7 tracking-tight">
+//       <div className="grid grid-cols-1 gap-6 tracking-tight leading-7 md:grid-cols-2 lg:grid-cols-3">
 //         {pricingPlans.map((plan) => (
 //           <Card
 //             key={plan.name}
@@ -102,25 +102,25 @@
 //                 : "bg-white dark:bg-black text-black dark:text-white"
 //             } border-gray-200 dark:border-gray-800`}
 //           >
-//             <h3 className="text-xl sm:text-2xl font-bold mb-2 leading-7 tracking-tight">{plan.name}</h3>
-//             <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-7 tracking-tight">
+//             <h3 className="mb-2 text-xl font-bold tracking-tight leading-7 sm:text-2xl">{plan.name}</h3>
+//             <p className="mb-6 text-sm tracking-tight leading-7 sm:text-base text-muted-foreground">
 //               {plan.subtitle}
 //             </p>
 
 //             {plan.comingSoon ? (
-//               <div className="mb-6 leading-7 tracking-tight">
-//                 <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-none tracking-tight">
+//               <div className="mb-6 tracking-tight leading-7">
+//                 <span className="text-3xl font-bold tracking-tight leading-none sm:text-4xl md:text-5xl">
 //                   Coming Soon
 //                 </span>
 //               </div>
 //             ) : (
-//               <div className="mb-6 leading-7 tracking-tight">
-//                 <div className="flex items-baseline leading-7 tracking-tight">
-//                   <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-none tracking-tight">$</span>
-//                   <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-none tracking-tight">
+//               <div className="mb-6 tracking-tight leading-7">
+//                 <div className="flex items-baseline tracking-tight leading-7">
+//                   <span className="text-3xl font-bold tracking-tight leading-none sm:text-4xl md:text-5xl">$</span>
+//                   <span className="text-3xl font-bold tracking-tight leading-none sm:text-4xl md:text-5xl">
 //                     {plan.price}
 //                   </span>
-//                   <span className="text-lg sm:text-xl text-muted-foreground ml-2 leading-7 tracking-tight">
+//                   <span className="ml-2 text-lg tracking-tight leading-7 sm:text-xl text-muted-foreground">
 //                     /mo
 //                   </span>
 //                 </div>
@@ -128,7 +128,7 @@
 //             )}
 
 //             <p
-//               className="text-base sm:text-lg mb-8 leading-normal tracking-tight"
+//               className="mb-8 text-base tracking-tight leading-normal sm:text-lg"
 //             >
 //               {plan.description}
 //             </p>
@@ -145,23 +145,23 @@
 //               {plan.ctaText}
 //             </Button>
 
-//             <ul className="space-y-4 leading-7 tracking-tight">
+//             <ul className="space-y-4 tracking-tight leading-7">
 //               {plan.features.map((feature) => (
-//                 <li key={feature} className="flex items-center gap-3 leading-7 tracking-tight">
-//                   <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center flex-shrink-0 leading-7 tracking-tight">
-//                     <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 leading-7 tracking-tight" />
+//                 <li key={feature} className="flex gap-3 items-center tracking-tight leading-7">
+//                   <div className="flex flex-shrink-0 justify-center items-center w-6 h-6 tracking-tight leading-7 bg-emerald-100 rounded-full dark:bg-emerald-900">
+//                     <CheckCircle2 className="w-5 h-5 tracking-tight leading-7 text-emerald-500 dark:text-emerald-400" />
 //                   </div>
-//                   <span className="text-base sm:text-lg leading-7 tracking-tight">
+//                   <span className="text-base tracking-tight leading-7 sm:text-lg">
 //                     {feature}
 //                   </span>
 //                 </li>
 //               ))}
 //             </ul>
 
-//             <div className="mt-4 sm:mt-6 text-center leading-7 tracking-tight">
+//             <div className="mt-4 tracking-tight leading-7 text-center sm:mt-6">
 //               <Link
 //                 href="#"
-//                 className="text-sm sm:text-base text-muted-foreground hover:text-foreground leading-7 tracking-tight"
+//                 className="text-sm tracking-tight leading-7 sm:text-base text-muted-foreground hover:text-foreground"
 //               >
 //                 Questions?
 //               </Link>
@@ -207,7 +207,7 @@ const pricingPlans = [
   {
     name: "Pages",
     subtitle: "pause or cancel anytime",
-    price: 1887,
+    price: 499,
     description:
       "Best for early-stage startups and businesses that need a marketing side and ongoing developmental work.",
     features: [
@@ -228,7 +228,7 @@ const pricingPlans = [
   {
     name: "Multi Page Website",
     subtitle: "starts at",
-    price: 4887,
+    price: 899,
     description:
       "Best for small businesses and startups that need a performant website that looks great and converts visitors to customers.",
     features: [
@@ -259,16 +259,16 @@ export default function PricingSection() {
 
   return (
     <section className="container px-4 py-7 mx-auto max-w-6xl">
-      <div className="text-center mb-10">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 tracking-tight">
+      <div className="mb-10 text-center">
+        <h1 className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
           Simple pricing for everyone
         </h1>
-        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="mx-auto max-w-2xl text-base sm:text-lg text-muted-foreground">
           Choose an affordable plan packed with the maximum value for engaging your audience, creating customer loyalty, and driving sales.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {pricingPlans.map((plan) => (
           <Card
             key={plan.name}
@@ -278,8 +278,8 @@ export default function PricingSection() {
                 : "bg-white dark:bg-black ring-offset-inherit transition-all duration-150 ease-in-out hover:ring-1 hover:ring-black hover:ring-offset-1 hover:ring-offset-current dark:hover:ring-neutral-50"
             }`}
           >
-            <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <h3 className="mb-1 text-lg font-semibold">{plan.name}</h3>
+            <p className="mb-4 text-sm text-muted-foreground">
               {plan.subtitle}
             </p>
 
@@ -296,14 +296,14 @@ export default function PricingSection() {
                   <span className="text-4xl font-bold">
                     {plan.price}
                   </span>
-                  <span className="text-base text-muted-foreground ml-1">
+                  <span className="ml-1 text-base text-muted-foreground">
                     /mo
                   </span>
                 </div>
               </div>
             )}
 
-            <p className="text-sm mb-6">
+            <p className="mb-6 text-sm">
               {plan.description}
             </p>
 
@@ -314,7 +314,7 @@ export default function PricingSection() {
                   : "bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-100 dark:text-black dark:hover:bg-gray-300"
               }`}
               disabled={plan.comingSoon}
-            //   @ts-ignore            
+            //   @ts-ignore
               onClick={() => handleClick(plan.url)}
             >
               {plan.ctaText}
@@ -322,7 +322,7 @@ export default function PricingSection() {
 
             <ul className="space-y-3 text-sm">
               {plan.features.map((feature) => (
-                <li key={feature} className="flex items-center gap-2">
+                <li key={feature} className="flex gap-2 items-center">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                   <span>{feature}</span>
                 </li>

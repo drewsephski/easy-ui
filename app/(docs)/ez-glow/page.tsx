@@ -68,18 +68,14 @@ export default function EzGlow() {
           </div>
           <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
             <div className="flex justify-between">
-              <Button
-                className="w-1/2 px-0 py-4 mr-2 group"
-                type="submit"
-                onClick={() =>
-                  window.open(
-                    "https://premium.easyui.pro/pricing-section",
-                    "_blank"
-                  )
-                }
-              >
-                Buy Now <Icons.externalLink className="ml-1 p-1" />
-              </Button>
+              <Link href="/checkout?template=EZ%20Glow" className="w-1/2">
+                <Button
+                  className="w-full px-0 py-4 mr-2 group"
+                  type="button"
+                >
+                  Buy Now <Icons.externalLink className="ml-1 p-1 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </Link>
               <Button
                 className="flex-1"
                 variant="outline"

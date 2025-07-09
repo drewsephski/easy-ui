@@ -14,17 +14,25 @@ export const siteConfig = {
       href: "/easy-mvp-pricing",
     },
     {
-      title: "Blog",
-      href: "/blog",
-    },
-    {
       title: "Templates",
       href: "/templates",
+    },
+    {
+      title: "Premium",
+      href: "/premium",
+    },
+    {
+      title: "Contact",
+      href: "/contact",
     }
   ],
   links: {
-    twitter: "https://twitter.com/kathanmehtaa",
-    github: "https://github.com/DarkInventor/easy-ui",
-    docs: "https://www.easyui.pro/introduction",
+    twitter: "https://twitter.com/drewsephski",
+    github: "https://github.com/drewsephski",
+    instagram: "https://instagram.com/drewsephski",
+    pricing: "/pricing",
+    premium: "/premium",
+    templates: "/templates",
+    contact: "/contact"
   },
 }

@@ -2,7 +2,7 @@ import {
   LucideProps,
   Moon,
   SunMedium,
-  Twitter,
+  Instagram,
   ExternalLink, 
   Github,
   Linkedin,
@@ -15,7 +15,7 @@ export type Icon = LucideIcon
 export const Icons = {
   sun: SunMedium,
   moon: Moon,
-  twitter: Twitter,
+  instagram: Instagram,
   externalLink: ExternalLink,
   github: Github,
   linkedin: Linkedin,

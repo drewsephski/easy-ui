@@ -15,7 +15,7 @@
 // import { GoogleAnalytics } from '@next/third-parties/google'
 
 // export const metadata: Metadata = {
-//   metadataBase: new URL("https://www.easyui.pro/"), 
+//   metadataBase: new URL("https://www.easyui.pro/"),
 //   title: {
 //     default: siteConfig.name,
 //     template: `%s - ${siteConfig.name}`,
@@ -161,7 +161,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.easyui.pro/",
+    url: "/",
     title: `${siteConfig.name} - Beautiful React & Tailwind CSS Templates`,
     description: siteConfig.description,
     siteName: siteConfig.name,
@@ -179,7 +179,7 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} - Beautiful React & Tailwind CSS Templates`,
     description: siteConfig.description,
     images: ["https://pub-0cd6f9d4131f4f79ac40219248ae64db.r2.dev/og.png"],
-    creator: "@kathanmehtaa",
+    creator: "@drew",
   },
   robots: {
     index: true,
@@ -193,9 +193,9 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://www.easyui.pro",
+    canonical: "/",
     languages: {
-      "en-US": "https://www.easyui.pro",
+      "en-US": "/",
     },
   },
 }
@@ -218,7 +218,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://www.easyui.pro/" />
+        <link rel="canonical" href="/" />
         {siteConfig.mainNav.map((item) => (
           <link key={item.href} rel="prerender" href={item.href} />
         ))}
@@ -245,16 +245,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
               "@type": "WebSite",
               "name": "${siteConfig.name}",
               "description": "${siteConfig.description}",
-              "url": "https://www.easyui.pro/",
+              "url": "/",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://www.easyui.pro/search?q={search_term_string}",
+                "target": "/search?q={search_term_string}",
                 "query-input": "required name=search_term_string"
               },
               "sameAs": [
                 "${siteConfig.links.twitter}",
                 "${siteConfig.links.github}",
-                "${siteConfig.links.docs}"
+                "${siteConfig.links.instagram}",
+                "${siteConfig.links.premium}"
               ]
             }
           `}

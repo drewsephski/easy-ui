@@ -7,6 +7,7 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 import AdBanner from "@/components/ad-banner"
 import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
 function GridsPage() {
   return (
@@ -28,13 +29,14 @@ function GridsPage() {
       </div>
     <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
         <div className="flex justify-between">
-        <Button
-            className="w-1/2 px-0 py-4 mr-2 group rounded-[0.75rem]"
-            type="submit"
-            onClick={() => window.open("https://premium.easyui.pro/pricing-section", "_blank")}
+        <Link href="/checkout?template=EZ%20Grids" className="w-1/2">
+          <Button
+            className="w-full px-0 py-4 mr-2 group rounded-[0.75rem]"
+            type="button"
           >
-            Buy Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide ml-1 lucide-arrow-right size-4 transition-all duration-300 ease-out group-hover:translate-x-2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            Buy Now <Icons.externalLink className="ml-1 p-1 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
+        </Link>
           <Button
             className="w-1/2 px-0 py-4 border shadow-sm ml-2 hover:bg-accent hover:text-accent-foreground"
             variant="outline"

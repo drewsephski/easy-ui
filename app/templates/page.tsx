@@ -61,6 +61,7 @@ const templates: Template[] = [
   { name: 'EZ SaaS', image: '/ez-SaaS.png', path: '/ez-SaaS', description: 'Stand out and showcase your magic', isNew: true, category: 'AI', difficulty: 'Beginner', isFree: true },
 ]
 
+export { templates };
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -122,7 +123,7 @@ export default function Component() {
 
   const Sidebar = () => (
     <div className="space-y-6">
-      <div className="space-y-2 ">
+      <div className="space-y-2">
         <div className="relative mt-10 lg:mt-0 md:mt-0">
           <Search
             className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground"
@@ -140,7 +141,7 @@ export default function Component() {
         </div>
       </div>
       <div className="space-y-2">
-      <div className="flex items-center space-x-2 pb-4">
+      <div className="flex items-center pb-4 space-x-2">
         <Switch
           checked={showFreeOnly}
           onCheckedChange={setShowFreeOnly}
@@ -153,13 +154,13 @@ export default function Component() {
         <h2 className="text-sm font-semibold">Categories</h2>
         <ScrollArea className="h-[300px] pr-4">
           {categories.map(category => (
-            <label key={category} className="flex items-center space-x-2 rounded-lg p-2 hover:bg-accent cursor-pointer">
+            <label key={category} className="flex items-center p-2 space-x-2 rounded-lg cursor-pointer hover:bg-accent">
               <Checkbox
               className='border-gray-300 dark:border-gray-500'
                 checked={selectedCategories.includes(category)}
                 onCheckedChange={() => handleCategoryChange(category)}
               />
-              <span className="text-sm dark:text-gray-100 text-gray-800 leading-2 tracking-tight">{category}</span>
+              <span className="text-sm tracking-tight text-gray-800 dark:text-gray-100 leading-2">{category}</span>
             </label>
           ))}
         </ScrollArea>
@@ -167,13 +168,13 @@ export default function Component() {
       <div className="space-y-2">
         <h2 className="text-sm font-semibold">Difficulty</h2>
         {difficulties.map(difficulty => (
-          <label key={difficulty} className="flex items-center space-x-2 rounded-lg p-2 hover:bg-accent cursor-pointer">
+          <label key={difficulty} className="flex items-center p-2 space-x-2 rounded-lg cursor-pointer hover:bg-accent">
             <Checkbox
              className='border-gray-300 dark:border-gray-500'
               checked={selectedDifficulty.includes(difficulty)}
               onCheckedChange={() => handleDifficultyChange(difficulty)}
             />
-            <span className="text-sm dark:text-gray-100 text-gray-800 leading-2 tracking-tight">{difficulty}</span>
+            <span className="text-sm tracking-tight text-gray-800 dark:text-gray-100 leading-2">{difficulty}</span>
           </label>
         ))}
       </div>
@@ -182,8 +183,8 @@ export default function Component() {
   )
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="px-4 mx-auto max-w-full sm:px-6 lg:px-8">
         <div className="py-0">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold"></h1>
@@ -191,14 +192,14 @@ export default function Component() {
               {/* @ts-ignore */}
               <Tabs value={viewMode} onValueChange={(value: 'grid' | 'list') => setViewMode(value)}>
                 <TabsList>
-                  <TabsTrigger value="grid"><Grid className="h-4 w-4" /></TabsTrigger>
-                  <TabsTrigger value="list"><List className="h-4 w-4" /></TabsTrigger>
+                  <TabsTrigger value="grid"><Grid className="w-4 h-4" /></TabsTrigger>
+                  <TabsTrigger value="list"><List className="w-4 h-4" /></TabsTrigger>
                 </TabsList>
               </Tabs>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="icon" className="lg:hidden border rounded-xl">
-                    <Menu className="h-6 w-6 " />
+                  <Button variant="outline" size="icon" className="rounded-xl border lg:hidden">
+                    <Menu className="w-6 h-6" />
                     <span className="sr-only">Open filters</span>
                   </Button>
                 </SheetTrigger>
@@ -208,8 +209,8 @@ export default function Component() {
               </Sheet>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row gap-8">
-            <aside className="w-full lg:w-64 hidden lg:block">
+          <div className="flex flex-col gap-8 lg:flex-row">
+            <aside className="hidden w-full lg:w-64 lg:block">
               <Sidebar />
 
             </aside>
@@ -220,17 +221,17 @@ export default function Component() {
                     <Card className={`bg-card hover:bg-accent transition-colors duration-300 overflow-hidden rounded-xl cursor-pointer group relative mb-5 ${viewMode === 'list' ? 'flex flex-col sm:flex-row' : ''}`}>
                       <CardContent className={`p-0 ${viewMode === 'list' ? 'sm:w-1/3 w-full' : ''}`}>
                         {viewMode === 'grid' || (viewMode === 'list' && window.innerWidth >= 640) ? (
-                          <img src={template.image} alt={template.name} className="w-full h-48 object-cover" />
+                          <img src={template.image} alt={template.name} className="object-cover w-full h-48" />
                         ) : null}
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
-                          <span className="text-white text-md font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex absolute inset-0 justify-center items-center bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
+                          <span className="font-semibold text-white opacity-0 transition-opacity duration-300 text-md group-hover:opacity-100">
                             View Details
                           </span>
                         </div>
                       </CardContent>
                       <CardFooter className={`flex flex-col items-start p-6 ${viewMode === 'list' ? 'w-2/3' : ''}`}>
-                        <div className="flex justify-between items-center w-full mb-2">
-                          <h2 className="text-md font-semibold leading-7 tracking-tight">{template.name}</h2>
+                        <div className="flex justify-between items-center mb-2 w-full">
+                          <h2 className="font-semibold tracking-tight leading-7 text-md">{template.name}</h2>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
@@ -244,17 +245,17 @@ export default function Component() {
                             </Tooltip>
                           </TooltipProvider>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-4">{template.description}</p>
+                        <p className="mb-4 text-sm text-muted-foreground">{template.description}</p>
                         <div className="flex justify-between items-center w-full">
                           <span className="text-sm text-muted-foreground">{template.category}</span>
                           <div className="flex gap-2">
                             {template.isNew && (
-                              <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                              <Badge variant="outline" className="text-green-800 bg-green-100 dark:bg-green-900 dark:text-green-300">
                                 New
                               </Badge>
                             )}
                             {template.isFree && (
-                              <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                              <Badge variant="outline" className="text-blue-800 bg-blue-100 dark:bg-blue-900 dark:text-blue-300">
                                 Free
                               </Badge>
                             )}

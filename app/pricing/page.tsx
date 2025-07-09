@@ -26,14 +26,14 @@ type PricingCardProps = {
 const PricingHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <section className="text-center">
     <h2 className="text-3xl font-bold">{title}</h2>
-    <p className="text-xl pt-1">{subtitle}</p>
+    <p className="pt-1 text-xl">{subtitle}</p>
     <br />
   </section>
 )
 
 const PricingSwitch = ({ onSwitch }: PricingSwitchProps) => (
-  <Tabs defaultValue="0" className="w-40 mx-auto" onValueChange={onSwitch}>
-    <TabsList className="py-6 px-2">
+  <Tabs defaultValue="0" className="mx-auto w-40" onValueChange={onSwitch}>
+    <TabsList className="px-2 py-6">
       <TabsTrigger value="0" className="text-base">
         Monthly
       </TabsTrigger>
@@ -51,10 +51,10 @@ const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, 
         exclusive,
     })}>
     <div>
-      <CardHeader className="pb-8 pt-4">
+      <CardHeader className="pt-4 pb-8">
         {isYearly && yearlyPrice && monthlyPrice ? (
           <div className="flex justify-between">
-            <CardTitle className="text-zinc-700 dark:text-zinc-300 text-lg">{title}</CardTitle>
+            <CardTitle className="text-lg text-zinc-700 dark:text-zinc-300">{title}</CardTitle>
             <div
               className={cn("px-2.5 rounded-xl h-fit text-sm py-1 bg-zinc-200 text-black dark:bg-zinc-800 dark:text-white", {
                 "bg-gradient-to-r from-orange-400 to-rose-400 dark:text-black ": popular,
@@ -63,11 +63,11 @@ const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, 
             </div>
           </div>
         ) : (
-          <CardTitle className="text-zinc-700 dark:text-zinc-300 text-lg">{title}</CardTitle>
+          <CardTitle className="text-lg text-zinc-700 dark:text-zinc-300">{title}</CardTitle>
         )}
         <div className="flex gap-0.5">
           <h3 className="text-3xl font-bold">{yearlyPrice && isYearly ? "$" + yearlyPrice : monthlyPrice ? "$" + monthlyPrice : "Custom"}</h3>
-          <span className="flex flex-col justify-end text-sm mb-1">{yearlyPrice && isYearly ? "/year" : monthlyPrice ? "/month" : null}</span>
+          <span className="flex flex-col justify-end mb-1 text-sm">{yearlyPrice && isYearly ? "/year" : monthlyPrice ? "/month" : null}</span>
         </div>
         <CardDescription className="pt-1.5 h-12">{description}</CardDescription>
       </CardHeader>
@@ -78,7 +78,7 @@ const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, 
       </CardContent>
     </div>
     <CardFooter className="mt-2">
-      <Button className="relative inline-flex w-full items-center justify-center rounded-md bg-black text-white dark:bg-white px-6 font-medium  dark:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+      <Button className="inline-flex relative justify-center items-center px-6 w-full font-medium text-white bg-black rounded-md transition-colors dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
         <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
         {actionLabel}
       </Button>
@@ -99,36 +99,28 @@ export default function PricingPage() {
 
   const plans = [
     {
-      title: "Basic",
-      monthlyPrice: 10,
-      yearlyPrice: 100,
-      description: "Essential features you need to get started",
-      features: ["Example Feature Number 1", "Example Feature Number 2", "Example Feature Number 3"],
+      title: "Starter",
+      monthlyPrice: 499,
+      yearlyPrice: 4000,
+      description: "Perfect for individuals and small teams",
+      features: ["Basic features", "Standard support", "Up to 10 projects"],
       actionLabel: "Get Started",
     },
     {
       title: "Pro",
-      monthlyPrice: 25,
-      yearlyPrice: 250,
-      description: "Perfect for owners of small & medium businessess",
-      features: ["Example Feature Number 1", "Example Feature Number 2", "Example Feature Number 3"],
+      monthlyPrice: 899,
+      yearlyPrice: 8000,
+      description: "Ideal for growing businesses",
+      features: ["Advanced features", "Priority support", "Unlimited projects", "Advanced analytics"],
       actionLabel: "Get Started",
       popular: true,
-    },
-    {
-      title: "Enterprise",
-      price: "Custom",
-      description: "Dedicated support and infrastructure to fit your needs",
-      features: ["Example Feature Number 1", "Example Feature Number 2", "Example Feature Number 3", "Super Exclusive Feature"],
-      actionLabel: "Contact Sales",
-      exclusive: true,
     },
   ]
   return (
     <div className="pt-28 pb-2 sm:pb-2 lg:pb-20">
       <PricingHeader title="Pricing Plans" subtitle="Choose the plan that's right for you" />
       <PricingSwitch onSwitch={togglePricingPeriod} />
-      <section className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-8 mt-8">
+      <section className="flex flex-col gap-8 justify-center mt-8 sm:flex-row sm:flex-wrap">
         {plans.map((plan) => {
           return <PricingCard key={plan.title} {...plan} isYearly={isYearly} />
         })}

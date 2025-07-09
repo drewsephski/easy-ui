@@ -14,7 +14,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   }
 
   const handleProfileVisit = () => {
-    window.open(`https://twitter.com/kathanmehtaa`, '_blank')
+    window.open(`https://twitter.com/drew`, '_blank')
   }
 
   return (
