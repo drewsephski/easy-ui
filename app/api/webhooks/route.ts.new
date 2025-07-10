@@ -1,0 +1,51 @@
+// ... [previous imports remain the same until line 280]
+        if (event.type === 'checkout.session.completed') {
+          checkoutSession = event.data.object as Stripe.Checkout.Session;
+        } else {
+          // For payment_intent and charge events, get the payment intent first
+          const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          
+          // First, try to get the session ID from the payment intent's metadata
+          let sessionId = paymentIntent.metadata?.session_id;
+          
+          // If we don't have a session ID in metadata, try to get it from the latest charge
+          if (!sessionId && paymentIntent.latest_charge) {
+            try {
+              // Retrieve the charge to get the session ID if available
+              const charge = await stripe.charges.retrieve(paymentIntent.latest_charge as string, {
+                expand: ['payment_intent']
+              });
+              
+              // Check if the charge has a session ID in its metadata
+              if (charge.metadata?.session_id) {
+                sessionId = charge.metadata.session_id;
+              }
+            } catch (error) {
+              console.error('Error retrieving charge:', error);
+            }
+          }
+          
+          if (!sessionId) {
+            console.error('No session ID found in payment intent:', paymentIntent.id);
+            console.log('Payment intent metadata:', paymentIntent.metadata);
+            return NextResponse.json(
+              { received: true, error: 'No session ID found in payment intent' },
+              { status: 200 }
+            );
+          }
+          
+          try {
+            // Retrieve the checkout session with expanded line items
+            checkoutSession = await stripe.checkout.sessions.retrieve(sessionId, {
+              expand: ['line_items', 'payment_intent']
+            });
+            console.log('Retrieved checkout session:', checkoutSession.id);
+          } catch (error) {
+            console.error('Error retrieving checkout session:', error);
+            return NextResponse.json(
+              { received: true, error: 'Failed to retrieve checkout session' },
+              { status: 200 }
+            );
+          }
+        }
+// ... [rest of the file remains the same]

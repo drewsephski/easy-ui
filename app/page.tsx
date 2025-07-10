@@ -22,7 +22,7 @@ import EasyHero from "@/components/easy-hero"
 import SparkleButton from "@/components/easyui/sparkle-button"
 import ShowcaseGrid from "@/components/showcase"
 import ROISection from "@/components/ROISection"
-
+import { HoverButton } from "@/components/easyui/hover-button"
 // Corrected the path for FAQPage import
 
 export default function IndexPage() {
@@ -42,19 +42,15 @@ export default function IndexPage() {
       {/* Replace the button section with this */}
 <div className="px-8 py-5 mx-auto w-full max-w-lg">
   <div className="flex flex-col gap-3 w-full sm:flex-row">
-    <Link
-      href="/templates"
-      className={cn(
-        buttonVariants({
-          variant: "default",
-          size: "lg",
-        }),
-        "flex-1 gap-2 text-sm font-semibold tracking-tighter whitespace-nowrap transition-all duration-150 ease-in-out group rounded-[1rem] ring-offset-inherit hover:ring-2 hover:ring-black hover:ring-offset-2 hover:ring-offset-current dark:hover:ring-neutral-50"
-      )}
-    >
-      Browse Templates
-      <ChevronRight className="ml-1 transition-all duration-300 ease-out size-4 shrink-0 group-hover:translate-x-1" />
-    </Link>
+    <div className="flex-1">
+      <HoverButton
+        href="/template-library"
+        className="px-4"
+        size="lg"
+      >
+        Browse Templates
+      </HoverButton>
+    </div>
     <div className="relative flex-1">
       <Link href="/premium" className="block w-full h-full">
         <SparkleButton

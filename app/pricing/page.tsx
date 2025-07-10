@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import React, { useState } from "react"
+import BuyButton from "@/components/BuyButton"
 import { cn } from "@/lib/utils"
 
 type PricingSwitchProps = {
@@ -21,6 +22,7 @@ type PricingCardProps = {
   actionLabel: string
   popular?: boolean
   exclusive?: boolean
+  productName?: string
 }
 
 const PricingHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
@@ -44,7 +46,7 @@ const PricingSwitch = ({ onSwitch }: PricingSwitchProps) => (
   </Tabs>
 )
 
-const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, features, actionLabel, popular, exclusive }: PricingCardProps) => (
+const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, features, actionLabel, popular, exclusive, productName }: PricingCardProps) => (
   <Card
     className={cn(`w-72 flex flex-col justify-between py-1 ${popular ? "border-rose-400" : "border-zinc-700"} mx-auto sm:mx-0`, {
       "animate-background-shine bg-white dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] transition-colors":
@@ -78,10 +80,14 @@ const PricingCard = ({ isYearly, title, monthlyPrice, yearlyPrice, description, 
       </CardContent>
     </div>
     <CardFooter className="mt-2">
-      <Button className="inline-flex relative justify-center items-center px-6 w-full font-medium text-white bg-black rounded-md transition-colors dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-        <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
-        {actionLabel}
-      </Button>
+      {actionLabel === "Get Started" && productName ? (
+        <BuyButton productName={productName} />
+      ) : (
+        <Button className="inline-flex relative justify-center items-center px-6 w-full font-medium text-white bg-black rounded-md transition-colors dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+          <div className="absolute -inset-0.5 -z-10 rounded-lg bg-gradient-to-b from-[#c7d2fe] to-[#8678f9] opacity-75 blur" />
+          {actionLabel}
+        </Button>
+      )}
     </CardFooter>
   </Card>
 )
@@ -105,6 +111,7 @@ export default function PricingPage() {
       description: "Perfect for individuals and small teams",
       features: ["Basic features", "Standard support", "Up to 10 projects"],
       actionLabel: "Get Started",
+      productName: "Starter Plan",
     },
     {
       title: "Pro",
@@ -114,6 +121,7 @@ export default function PricingPage() {
       features: ["Advanced features", "Priority support", "Unlimited projects", "Advanced analytics"],
       actionLabel: "Get Started",
       popular: true,
+      productName: "Pro Plan",
     },
   ]
   return (

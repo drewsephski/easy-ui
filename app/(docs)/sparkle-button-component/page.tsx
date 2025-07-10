@@ -92,7 +92,7 @@ function SparkleButtonComponent() {
 
               <div className="flex flex-col ml-3 space-y-4 lg:ml-4 md:lg-3">
               {/* <p className="mt-5 font-semibold tracking-tight leading-7">Step 2: Update the import paths and run this code.</p> */}
-                <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto relative bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto relative bg-gray-100 dark:bg-gray-800 border border-gray-200 border-solid dark:border-gray-700">
 
                 <button onClick={() => {
                       const codeElement = document.getElementById('codeBlock2');
@@ -107,7 +107,7 @@ function SparkleButtonComponent() {
                     <CopyIcon className="h-4 text-black hover:text-gray-400 active:text-blue-700 dark:text-white" />
               </button>
 
-                  <pre className="py-2 pb-2 pl-2 ml-2 font-sm"><code id="codeBlock2" className="text-sm text-left language-js"> 
+                  <pre className="py-2 pb-2 pl-2 ml-2 font-sm"><code id="codeBlock2" className="text-sm text-left language-js">
             {/* </div> */}
             </code></pre>
             </div>
@@ -140,7 +140,7 @@ function SparkleButtonComponent() {
 <TabsContent value="cli">
   <div className="flex flex-col ml-3 space-y-4 w-full max-w-full md:lg-3 lg:ml-4">
     {/* <p className="mt-5 text-xl font-semibold tracking-tight leading-7 lg:text-2xl">Installation</p> */}
-    <div className="relative w-full max-w-full rounded-md border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800 [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+    <div className="relative w-full max-w-full rounded-md border border-gray-200 border-solid bg-gray-100 dark:border-gray-700 dark:bg-gray-800 [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
       <button
         onClick={copyToClipboard}
         className="flex absolute top-0 right-0 z-10 items-center px-3 py-1 m-4 text-white bg-transparent rounded-lg"
@@ -222,7 +222,7 @@ const SparkleButton = ({ text, size, variant }: SparkleProps) => {
     <div className="flex overflow-hidden justify-center items-center w-full h-full bg-transparent">
       <div className="relative sparkle-button">
         <Button
-          className="flex relative gap-1 items-center px-5 py-3 text-sm text-2xl whitespace-nowrap rounded-full transition-all cursor-pointer duration-250"
+          className="flex relative gap-1 items-center px-5 py-3 text-2xl whitespace-nowrap rounded-full transition-all cursor-pointer duration-250"
           onMouseEnter={() => setIsActive(true)}
           onMouseLeave={() => setIsActive(false)}
           size={size}

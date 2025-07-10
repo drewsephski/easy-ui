@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Badge } from "@/components/ui/badge"
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
@@ -32,13 +33,9 @@ function Retro() {
       </div>
      <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
         <div className="flex justify-between">
-          <Button
-            className="w-1/2 px-0 py-4 mr-2 group rounded-[0.75rem]"
-            type="submit"
-            onClick={() => window.open("https://github.com/DarkInventor/retro-template/archive/refs/heads/main.zip", "_blank")}
-          >
-            Download Template <Icons.externalLink className="ml-1 p-1" />
-          </Button>
+          <div className="w-1/2">
+            <BuyButton productName="Retro Template" />
+          </div>
           <Button
             className="w-1/2 px-0 py-4 border shadow-sm ml-2 hover:bg-accent hover:text-accent-foreground"
             variant="outline"

@@ -84,6 +84,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   CheckIcon,
   ChevronRight,
@@ -101,6 +102,8 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 import { AnimatedSubscribeButton } from "./magicui/animated-subscribe-button"
 import { Badge } from "./ui/badge"
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import router from "next/router"
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -131,6 +134,18 @@ export function SiteHeader() {
         {/* Right-side content */}
         <div className="flex flex-1 justify-end items-center space-x-4">
           <nav className="flex items-center space-x-2">
+            {/* Search Input */}
+            <input
+              type="text"
+              placeholder="Search components..."
+              className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hidden md:block"
+              onChange={(e) => {
+                const newUrl = new URL(window.location.href);
+                newUrl.searchParams.set('search', e.target.value);
+                router.push(newUrl.toString());
+              }}
+            />
+
             <div className="hidden items-center space-x-2 lg:flex">
               {/* <Button
                 variant="ghost"
@@ -173,6 +188,19 @@ export function SiteHeader() {
                 />
               </Button>
               <ThemeToggle />
+              <div className="flex items-center space-x-2">
+                <SignedOut>
+                  <Link href="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
+                    Sign In
+                  </Link>
+                  <Link href="/register" className={cn(buttonVariants({ variant: "default", size: "sm" }))}>
+                    Sign Up
+                  </Link>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </div>
             </div>
             <Link
               href="/premium"
@@ -194,7 +222,7 @@ export function SiteHeader() {
 
       {/* Side menu for small and medium screens */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white text-black dark:bg-black dark:text-white  transform z-50 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white text-black dark:bg-black dark:text-white  transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out lg:hidden`}
       >
@@ -218,11 +246,24 @@ export function SiteHeader() {
             </button>
           </div>
           <nav className="flex flex-col py-10 pl-4 ml-0 space-y-4 text-black bg-white dark:bg-black dark:text-white z-60">
+            <div className="flex flex-col space-y-4">
+                <SignedOut>
+                  <Link href="/login" className="text-sm text-foreground hover:text-foreground/80">
+                    Sign In
+                  </Link>
+                  <Link href="/register" className="text-sm text-foreground hover:text-foreground/80">
+                    Sign Up
+                  </Link>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+            </div>
             <Link href="/" className="text-sm text-foreground hover:text-foreground/80">
               Home
             </Link>
             <Link
-              href="/templates"
+              href="/template-library"
               className="text-sm text-foreground hover:text-foreground/80"
             >
               Templates

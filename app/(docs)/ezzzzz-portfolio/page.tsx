@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Badge } from "@/components/ui/badge"
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import AdBanner from "@/components/ad-banner"
@@ -29,13 +30,9 @@ function EzPortfolio() {
       </div>
     <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
         <div className="flex justify-between">
-        <Button
-            className="w-1/2 px-0 py-4 mr-2 group rounded-[0.75rem]"
-            type="submit"
-            onClick={() => window.open("https://premium.easyui.pro/pricing-section", "_blank")}
-          >
-            Buy Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide ml-1 lucide-arrow-right size-4 transition-all duration-300 ease-out group-hover:translate-x-2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-          </Button>
+        <div className="w-1/2">
+            <BuyButton productName="EZ Portfolio" />
+          </div>
           <Button
             className="w-1/2 px-0 py-4 border shadow-sm ml-2 hover:bg-accent hover:text-accent-foreground"
             variant="outline"

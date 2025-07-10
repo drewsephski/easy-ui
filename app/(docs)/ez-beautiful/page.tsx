@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Badge } from "@/components/ui/badge"
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
@@ -29,14 +30,9 @@ function EzBeautiful() {
       </div>
      <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
         <div className="flex justify-between">
-          <Link href="/checkout?template=EZ%20Beautiful" className="w-1/2">
-            <Button
-              className="w-full px-0 py-4 mr-2 group rounded-[0.75rem]"
-              type="button"
-            >
-              Buy Now <Icons.externalLink className="ml-1 p-1 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
-          </Link>
+          <div className="w-1/2">
+            <BuyButton productName="EZ Beautiful" />
+          </div>
           <Button
             className="px-0 py-4 ml-2 w-1/2 border shadow-sm hover:bg-accent hover:text-accent-foreground"
             variant="outline"

@@ -18,6 +18,7 @@ Easy UI is a comprehensive collection of modern, responsive UI components and te
 ## Getting Started
 
 1. **Clone the repository**
+2. 
 
    ```bash
    git clone https://github.com/drewsephski/easy-ui.git

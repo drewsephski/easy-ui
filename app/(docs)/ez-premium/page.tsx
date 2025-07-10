@@ -201,6 +201,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Check, ChevronDown, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import { Icons } from "@/components/icons"
+import BuyButton from "@/components/BuyButton"
 
 export default function EzPremium() {
   const features = [
@@ -263,11 +264,9 @@ export default function EzPremium() {
           </div>
           <div className="w-full">
             <div className="flex justify-between gap-2">
-              <Link href="/checkout?template=EZ%20Premium" className="flex-1">
-                <Button className="w-full px-0 py-4 group" type="button">
-                  Buy Now <Icons.externalLink className="ml-1 p-1 transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
-              </Link>
+              <div className="flex-1">
+                <BuyButton productName="EZ Premium" />
+              </div>
               <Button
                 className="flex-1"
                 variant="outline"

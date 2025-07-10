@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
@@ -49,9 +50,11 @@ const ROISection = () => {
       </div>
 
       <div className="mb-12 text-center">
-      <RainbowButton onClick={() => window.open('https://premium.easyui.pro/pricing-section', '_blank')} className='rounded-[1rem] text-sm leading-7 tracking-tight font-bold'>
-Get Easy UI Premium Now
-</RainbowButton>
+        <Link href="/premium" className="block w-fit mx-auto">
+          <RainbowButton className='rounded-[1rem] text-sm leading-7 tracking-tight font-bold'>
+            Get Easy UI Premium Now
+          </RainbowButton>
+        </Link>
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 border  p-4 sm:p-6 lg:p-10 rounded-xl">
         {/* Left Column - Custom Landing Page */}

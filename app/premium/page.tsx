@@ -2,11 +2,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Metadata } from "next"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Code, CreditCard, LayoutDashboard, ShoppingCart, Smartphone, Zap } from "lucide-react"
+import { templatePrices, formatPrice } from '@/lib/template-prices';
+import AnimatedBadge from '@/components/easyui/animated-badge';
 // Templates data with images from the templates page
 const allTemplates = [
   {
@@ -200,7 +203,7 @@ const advancedAndPaidTemplates: UnifiedTemplate[] = allTemplates
       path: template.path.startsWith('/') ? template.path : `/${template.path}`,
       difficulty: template.difficulty as TemplateDifficulty,
       isFree: template.isFree ?? false,
-      price: template.isFree === false || template.isFree === undefined ? 49.99 : 0,
+      price: templatePrices[template.name] ?? 0,
       features: template.difficulty === 'Advanced'
         ? ["Full Source Code", "Lifetime Updates", "Community Support", "Advanced Features"]
         : ["Full Source Code", "Lifetime Updates", "Community Support"],
@@ -215,6 +218,38 @@ const categories = ['All', ...Array.from(new Set(allUnifiedTemplates.map((t: Uni
 
 export default function PremiumPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleCheckout = async (productName: string) => {
+    setIsLoading(prev => ({ ...prev, [productName]: true }));
+    setError(null);
+
+    try {
+      const response = await fetch('/api/checkout_sessions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productName, quantity: 1 }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        router.push(data.url);
+      } else {
+        setError(data.error || 'Failed to initiate checkout. Please try again.');
+        console.error('Failed to create checkout session:', data.error);
+      }
+    } catch (err: any) {
+      setError('An unexpected error occurred. Please try again.');
+      console.error('Error during checkout:', err);
+    } finally {
+      setIsLoading(prev => ({ ...prev, [productName]: false }));
+    }
+  };
 
   const filteredTemplates = selectedCategory === 'All'
     ? allUnifiedTemplates
@@ -268,13 +303,15 @@ export default function PremiumPage() {
                 </span>
               </div>
             )}
-            {template.isNew && (
-              <div className="absolute top-4 right-4 z-10">
-                <span className="px-3 py-1 text-xs font-medium text-white bg-green-500 rounded-full">
-                  New
-                </span>
-              </div>
-            )}
+
+            <div className="absolute top-4 right-4 z-10">
+              <AnimatedBadge
+                text={template.difficulty}
+                bgColor={template.difficulty === 'Beginner' ? 'bg-green-900' : template.difficulty === 'Intermediate' ? 'bg-blue-900' : 'bg-red-900'}
+                textColor={template.difficulty === 'Beginner' ? 'text-green-300' : template.difficulty === 'Intermediate' ? 'text-blue-300' : 'text-red-300'}
+                gradientColor={template.difficulty === 'Beginner' ? 'from-transparent via-emerald-600 to-transparent' : template.difficulty === 'Intermediate' ? 'from-transparent via-blue-600 to-transparent' : 'from-transparent via-red-600 to-transparent'}
+              />
+            </div>
 
             {template.image && (
               <div className="flex justify-center items-center bg-gradient-to-br aspect-video from-primary/10 to-muted">
@@ -298,7 +335,7 @@ export default function PremiumPage() {
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-xl font-bold">{template.title}</h3>
                 {template.price !== undefined && (
-                  <div className="text-lg font-bold">${template.price}</div>
+                  <div className="text-lg font-bold">{formatPrice(template.price)}</div>
                 )}
               </div>
 
@@ -326,12 +363,13 @@ export default function PremiumPage() {
                     View Details
                   </Link>
                 )}
-                <Link
-                  href={`/checkout?template=${encodeURIComponent(template.name)}`}
+                <button
+                  onClick={() => handleCheckout(template.name)}
                   className={buttonVariants({ className: "flex-1" })}
+                  disabled={isLoading[template.name]}
                 >
-                  Get Template
-                </Link>
+                  {isLoading[template.name] ? 'Processing...' : 'Get Template'}
+                </button>
               </div>
             </div>
           </div>

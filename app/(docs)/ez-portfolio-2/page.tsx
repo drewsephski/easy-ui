@@ -1,6 +1,7 @@
 "use client"
 
 import { Badge } from "@/components/ui/badge"
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import AdBanner from "@/components/ad-banner"
@@ -27,14 +28,9 @@ const EzPortfolioII = () => {
       </div>
     <div className="flex flex-col p-1 sm:w-1/2 lg:min-w-[900px]">
         <div className="flex justify-between">
-          <Link href="/checkout?template=EZ%20Portfolio%20II" className="w-1/2">
-            <Button
-              className="w-full rounded-xl px-0 py-4 group"
-              type="button"
-            >
-              Buy Now <Icons.externalLink className="ml-1 p-1 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
-          </Link>
+          <div className="w-1/2">
+            <BuyButton productName="EZ Portfolio II" />
+          </div>
           <Button
             className="ml-2 w-1/2 rounded-xl border px-0 py-4 shadow-sm hover:bg-accent hover:text-accent-foreground"
             variant="outline"

@@ -25,9 +25,9 @@
 //       </Link>
 //       <nav className="hidden lg:flex lg:items-center lg:gap-6 text-sm">
 //         <Link
-//           href="/templates"
+//           href="/template-library"
 //           className={cn(
-//             isActive("/templates") ? "text-foreground" : "text-foreground/60",
+//             isActive("/template-library") ? "text-foreground" : "text-foreground/60",
 //             "transition-colors hover:text-foreground/80"
 //           )}
 //         >
@@ -113,16 +113,16 @@ export function MainNav() {
       </Link>
       <nav className="hidden lg:flex lg:items-center lg:gap-6 text-sm">
         <Link
-          href="/templates"
+          href="/template-library"
           className={cn(
             "relative py-1 transition-colors hover:text-foreground/80",
-            isActive("/templates")
+            isActive("/template-library")
               ? "text-foreground font-medium"
               : "text-foreground/60"
           )}
         >
           Templates
-          {isActive("/templates") && (
+          {isActive("/template-library") && (
             <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" />
           )}
         </Link>

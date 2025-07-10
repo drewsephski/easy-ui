@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Badge } from "@/components/ui/badge"
+import BuyButton from "@/components/BuyButton"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
@@ -32,22 +33,11 @@ function QuotesAI() {
       </div>
      <div className="sm:w-1/2 p-1 flex-col flex lg:min-w-[900px]">
         <div className="flex justify-between">
+          <div className="flex-grow flex-1 min-w-0">
+            <BuyButton productName="QuotesAI Template" />
+          </div>
           <Button
-            className="w-1/2 px-0 py-4 mr-2 group rounded-[0.75rem]"
-            type="submit"
-            onClick={() => {
-              const link = document.createElement("a")
-              link.href =
-                "https://github.com/DarkInventor/quotes-template/archive/refs/heads/main.zip"
-              document.body.appendChild(link)
-              link.click()
-              document.body.removeChild(link)
-            }}
-          >
-            Download Template <Icons.externalLink className="ml-1 p-1" />
-          </Button>
-          <Button
-            className="w-1/2 px-0 py-4 border shadow-sm ml-2 hover:bg-accent hover:text-accent-foreground"
+            className="flex-grow flex-1 min-w-0 px-0 py-4 border shadow-sm ml-2 hover:bg-accent hover:text-accent-foreground"
             variant="outline"
             type="submit"
             onClick={() =>

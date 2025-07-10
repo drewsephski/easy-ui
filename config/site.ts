@@ -15,7 +15,7 @@ export const siteConfig = {
     },
     {
       title: "Templates",
-      href: "/templates",
+      href: "/template-library",
     },
     {
       title: "Premium",
@@ -32,7 +32,7 @@ export const siteConfig = {
     instagram: "https://instagram.com/drewsephski",
     pricing: "/pricing",
     premium: "/premium",
-    templates: "/templates",
+    templates: "/template-library",
     contact: "/contact"
   },
 }
