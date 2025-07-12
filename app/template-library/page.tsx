@@ -64,7 +64,6 @@ const templates: Template[] = [
 ]
 
 // Export templates for use in other files
-export { templates };
 
 // Main page component
 export default function TemplatesPage() {

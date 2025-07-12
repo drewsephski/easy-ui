@@ -134,18 +134,6 @@ export function SiteHeader() {
         {/* Right-side content */}
         <div className="flex flex-1 justify-end items-center space-x-4">
           <nav className="flex items-center space-x-2">
-            {/* Search Input */}
-            <input
-              type="text"
-              placeholder="Search components..."
-              className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hidden md:block"
-              onChange={(e) => {
-                const newUrl = new URL(window.location.href);
-                newUrl.searchParams.set('search', e.target.value);
-                router.push(newUrl.toString());
-              }}
-            />
-
             <div className="hidden items-center space-x-2 lg:flex">
               {/* <Button
                 variant="ghost"
@@ -295,9 +283,18 @@ export function SiteHeader() {
               Discord
             </Button> */}
             <Link href="/pricing" className="flex items-center px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground/80">
-              <Icons.github className="mr-2 w-4 h-4" />
               Pricing
             </Link>
+            <Button
+              variant="ghost"
+              onClick={() =>
+                window.open("https://github.com/drewsephski", "_blank")
+              }
+              className="flex items-start justify-start !px-0 !h-4"
+            >
+              <Icons.github className="mr-2 w-4 h-4" />
+              GitHub
+            </Button>
             <Button
               variant="ghost"
               onClick={() =>

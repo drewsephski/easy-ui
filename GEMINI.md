@@ -103,57 +103,35 @@ The payment and product delivery flow is orchestrated between the frontend, Next
 
 ## Developer Experience
 
-
-1. **Testing Infrastructure**
-   - Add Jest/React Testing Library for unit tests
-   - Implement Cypress for E2E testing
-   - Add Storybook for component development and testing
-
-2. **Development Environment**
-   - Add Docker configuration for consistent development environments
-   - Implement hot module replacement (HMR) for faster development
-   - Add VS Code recommended extensions and settings
-
-3. **Documentation**
+1. **Documentation**
    - Add JSDoc comments to all components and utilities
    - Create a component API reference using TypeDoc
    - Add a contributing guide with development workflows
 
-## Security Enhancements
-
-1. **API Security**
-   - Implement rate limiting for API routes
-   - Add request validation using Zod
-   - Implement CSRF protection for forms
-
-2. **Authentication**
-   - Add two-factor authentication (2FA) support
-   - Implement session management best practices
-   - Add security headers using `next-secure-headers`
-
-3. **Data Protection**
-   - Encrypt sensitive data at rest
-   - Implement row-level security in the database
-   - Add audit logging for sensitive operations
-
-## Accessibility (a11y)
-
-1. **Component Accessibility**
-   - Add proper ARIA attributes to interactive elements
-   - Ensure keyboard navigation works throughout the application
-   - Implement focus management for modals and dialogs
-
-2. **Color Contrast**
-   - Audit and fix color contrast issues
-   - Add a high contrast mode
-   - Implement proper color theming for light/dark modes
-
-3. **Screen Reader Support**
-   - Add proper alt text for all images
-   - Implement live regions for dynamic content
-   - Test with screen readers (VoiceOver, NVDA)
-
 ## New Features
+
+## Enhance Page Builder Drag-and-Drop Interactivity
+
+## Notes
+
+- User wants a much more interactive page builder with improved drag-and-drop elements.
+- Use React DnD (context7 for docs) for implementation.
+- The codebase uses DraggableComponent and DraggableComponentWithPreview for drag sources.
+- User has made changes to imports and component usage to support previews and more advanced drag/drop.
+- The DraggableComponent uses custom drag previews and supports reordering.
+- Enhanced DraggableComponent with better visual feedback, drop indicators, and fixed TypeScript/lint errors.
+
+## Task List
+
+- [ ] Review current implementation of drag and drop in page builder
+- [ ] Fetch and review latest React DnD documentation
+- [ ] Update DraggableComponent to support advanced drag/drop behaviors
+- [ ] Fix drag-and-drop bugs and ref issues in DraggableComponent
+- [ ] Test drag-and-drop behaviors for robustness and usability
+- [ ] Further enhance interactivity (e.g., visual feedback, accessibility, mobile support)
+- [ ] Refine UI/UX for clarity and feedback (animations, highlights, etc.)
+
+## Current Goal
 
 1. **Component Playground**
    - Interactive component playground with live editing
@@ -165,82 +143,12 @@ The payment and product delivery flow is orchestrated between the frontend, Next
    - Create a style guide
    - Add design system documentation
 
-3. **Analytics**
-   - Add privacy-focused analytics (e.g., Plausible)
-   - Track component usage
-   - Monitor performance metrics
-
-## Infrastructure
-
-1. **CI/CD Pipeline**
-   - Set up GitHub Actions for automated testing and deployment
-   - Implement automated versioning and changelog generation
-   - Add automated dependency updates with Dependabot
-
-2. **Monitoring**
-   - Add error tracking (Sentry/Bugsnag)
-   - Implement performance monitoring
-   - Set up uptime monitoring
-
-3. **Internationalization (i18n)**
-   - Add support for multiple languages
-   - Implement RTL (right-to-left) support
-   - Add locale-aware formatting for dates and numbers
-
-## Documentation
-
-1. **API Documentation**
+3. **API Documentation**
    - Generate OpenAPI/Swagger documentation for API routes
    - Add example requests and responses
    - Document error codes and responses
 
-2. **Component Documentation**
+4. **Component Documentation**
    - Add usage examples for each component
    - Document component props with TypeScript types
    - Add interactive examples with CodeSandbox integration
-
-3. **Guides**
-   - Create getting started guide
-   - Add migration guides for major updates
-   - Create video tutorials for complex components
-
-## Performance Monitoring
-
-1. **Real User Monitoring (RUM)**
-   - Implement Core Web Vitals tracking
-   - Monitor First Contentful Paint (FCP)
-   - Track Largest Contentful Paint (LCP)
-
-2. **Bundle Size Monitoring**
-   - Set up bundle size tracking
-   - Add budget thresholds
-   - Monitor third-party script impact
-
-## Developer Onboarding
-
-1. **Quick Start Guide**
-   - Add a 5-minute quick start
-   - Create a sandbox environment
-   - Add common recipes and patterns
-
-2. **Troubleshooting**
-   - Document common issues and solutions
-   - Add a FAQ section
-   - Create a community forum or Discord channel
-
-## Future Considerations
-
-1. **Micro-frontend Architecture**
-   - Evaluate if the application would benefit from micro-frontends
-   - Consider module federation for code sharing
-   - Plan for independent deployments
-
-2. **Serverless Functions**
-   - Consider moving API routes to serverless functions
-   - Implement edge functions for global performance
-   - Optimize cold start times
-
-3. **Web Components**
-   - Evaluate Web Components for framework-agnostic components
-   - Implement Shadow DOM for style encapsulation
-   - Consider LitElement for Web Component development

@@ -4,6 +4,7 @@ import { withContentlayer } from "next-contentlayer";
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  transpilePackages: ['framer-motion'],
   images: {
     domains: [
       'dev-to-uploads.s3.amazonaws.com',

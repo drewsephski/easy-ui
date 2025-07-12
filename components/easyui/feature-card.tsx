@@ -1,4 +1,4 @@
-export default function FeatureCard() {
+export default function FeatureCard({ title = 'Social', description = 'Write once, share with your friends' }) {
     return (
       <div className="mx-auto flex h-[399px] w-full max-w-[343px] flex-col overflow-hidden rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black shadow-md sm:h-[310px] sm:max-w-[510px]">
         <div className="flex grow flex-col p-4 sm:p-6">
@@ -41,8 +41,8 @@ export default function FeatureCard() {
           </div>
   
           <div className="border-t border-gray-200 dark:border-gray-700">
-            <h2 className=" text-lg font-bold sm:mt-2 sm:text-xl ">Social</h2>
-            <p className="text-xs text-gray-500 sm:text-sm">Write once, share with your friends</p>
+            <h2 className=" text-lg font-bold sm:mt-2 sm:text-xl ">{title}</h2>
+            <p className="text-xs text-gray-500 sm:text-sm">{description}</p>
           </div>
         </div>
       </div>

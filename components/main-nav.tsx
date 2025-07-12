@@ -16,14 +16,14 @@
 
 //   return (
 //     <div className="mr-4 md:flex">
-//       <Link href="/" className="mr-6 flex items-center space-x-2">
+//       <Link href="/" className="flex items-center mr-6 space-x-2">
 //         <img src="https://pub-0cd6f9d4131f4f79ac40219248ae64db.r2.dev/logo.svg" className="size-7" alt="Logo" />
 //         <span className="font-bold sm:inline-block">
 //           {siteConfig.name}
 //         </span>
-//         <Badge className="hidden sm:inline-block bg-black dark:bg-white text-white dark:text-black rounded-full" variant="secondary">Beta</Badge>
+//         <Badge className="hidden text-white bg-black rounded-full sm:inline-block dark:bg-white dark:text-black" variant="secondary">Beta</Badge>
 //       </Link>
-//       <nav className="hidden lg:flex lg:items-center lg:gap-6 text-sm">
+//       <nav className="hidden text-sm lg:flex lg:items-center lg:gap-6">
 //         <Link
 //           href="/template-library"
 //           className={cn(
@@ -51,7 +51,7 @@
 //         >
 //           Pricing
 //         </Link>
-        
+
 //         {/* <Link
 //           href={siteConfig.links.github}
 //           className={cn(
@@ -104,20 +104,20 @@ export function MainNav() {
 
   return (
     <div className="mr-4 md:flex">
-      <Link href="/" className="mr-6 flex items-center space-x-2">
+      <Link href="/" className="flex items-center mr-6 space-x-2">
         <img src="https://pub-0cd6f9d4131f4f79ac40219248ae64db.r2.dev/logo.svg" className="size-7" alt="Logo" />
         <span className="font-bold sm:inline-block">
           {siteConfig.name}
         </span>
-        <Badge className="hidden sm:inline-block bg-black dark:bg-white text-white dark:text-black rounded-full" variant="secondary">Beta</Badge>
+        <Badge className="hidden text-white bg-black rounded-full sm:inline-block dark:bg-white dark:text-black" variant="secondary">Beta</Badge>
       </Link>
-      <nav className="hidden lg:flex lg:items-center lg:gap-6 text-sm">
+      <nav className="hidden text-sm lg:flex lg:items-center lg:gap-6">
         <Link
           href="/template-library"
           className={cn(
             "relative py-1 transition-colors hover:text-foreground/80",
             isActive("/template-library")
-              ? "text-foreground font-medium"
+              ? "font-medium text-foreground"
               : "text-foreground/60"
           )}
         >
@@ -131,7 +131,7 @@ export function MainNav() {
           className={cn(
             "relative py-1 transition-colors hover:text-foreground/80",
             isActive("/component")
-              ? "text-foreground font-medium"
+              ? "font-medium text-foreground"
               : "text-foreground/60"
           )}
         >
@@ -145,7 +145,7 @@ export function MainNav() {
           className={cn(
             "relative py-1 transition-colors hover:text-foreground/80",
             isActive("/easy-mvp-pricing")
-              ? "text-foreground font-medium"
+              ? "font-medium text-foreground"
               : "text-foreground/60"
           )}
         >
@@ -157,14 +157,28 @@ export function MainNav() {
         <Link
           href="/premium"
           className={cn(
-            "flex items-center text-sm font-medium transition-colors hover:text-foreground/80",
+            "relative py-1 transition-colors hover:text-foreground/80",
             isActive("/premium")
-              ? "text-foreground"
+              ? "font-medium text-foreground"
               : "text-foreground/60"
           )}
         >
-          Premium Templates
+          Premium
           {isActive("/premium") && (
+            <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" />
+          )}
+        </Link>
+        <Link
+          href="/template-builder"
+          className={cn(
+            "relative py-1 transition-colors hover:text-foreground/80",
+            isActive("/template-builder")
+              ? "font-medium text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Builder
+          {isActive("/template-builder") && (
             <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" />
           )}
         </Link>
