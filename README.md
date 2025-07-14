@@ -15,36 +15,6 @@ Easy UI is a comprehensive collection of modern, responsive UI components and te
 - **TypeScript Support**: Fully typed components for better developer experience
 - **Easy Customization**: Components are designed to be easily customized to fit your brand
 
-## Getting Started
-
-1. **Clone the repository**
-2. 
-
-   ```bash
-   git clone https://github.com/drewsephski/easy-ui.git
-   cd easy-ui
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-3. **Run the development server**
-
-   ```bash
-   pnpm dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
-
-## Deployment
-
-Deploy your own version of Easy UI with Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdrewsephski%2Feasy-ui)
-
 ## Contributing
 
 We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
