@@ -57,7 +57,7 @@ const ErrorBoundary: React.FC<{
   return <>{children}</>;
 };
 
-export function CanvasDraggableComponent({
+export default function CanvasDraggableComponent({
   id,
   index,
   moveComponent,
@@ -107,6 +107,9 @@ export function CanvasDraggableComponent({
 
       // Determine mouse position
       const clientOffset = monitor.getClientOffset();
+      if (!clientOffset) {
+        return;
+      }
 
       // Get pixels to the top
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;

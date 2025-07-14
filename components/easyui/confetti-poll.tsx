@@ -58,14 +58,14 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
     const [stats, setStats] = useState(initialStats)
     const [isLiked, setIsLiked] = useState(false)
 
-    const totalVotes = initialTotalVotes || pollOptions.reduce((sum, option) => sum + option.votes, 0)
+    const totalVotes = initialTotalVotes || (pollOptions || []).reduce((sum, option) => sum + option.votes, 0)
 
     const handleVote = (optionId: string) => {
       if (hasVoted) return
 
       setSelectedOption(optionId)
       setPollOptions((prev) =>
-        prev.map((option) => ({
+        (prev || []).map((option) => ({
           ...option,
           votes: option.id === optionId ? option.votes + 1 : option.votes,
         })),
@@ -95,7 +95,7 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
       <div
         ref={ref}
         className={cn(
-          "w-full max-w-[598px] bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl mt-20 mb-20",
+          "mt-20 mb-20 w-full bg-white rounded-2xl border border-gray-200 max-w-[598px] dark:bg-black dark:border-gray-800",
           className,
         )}
         {...props}
@@ -103,9 +103,9 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
         <div className="p-4">
           {/* Author Section */}
           {author && (
-            <div className="flex items-start justify-between gap-2 mb-3">
+            <div className="flex gap-2 justify-between items-start mb-3">
               <div className="flex gap-3">
-                <Avatar className="h-10 w-10 rounded-full">
+                <Avatar className="w-10 h-10 rounded-full">
                   <AvatarImage src={author.avatar} alt={`@${author.username}`} />
                   <AvatarFallback>{author.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
@@ -117,7 +117,7 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
                 </div>
               </div>
               <button className="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100">
-                <MoreHorizontal className="h-5 w-5" />
+                <MoreHorizontal className="w-5 h-5" />
               </button>
             </div>
           )}
@@ -128,24 +128,24 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
           </div>
 
           <div className="mb-3">
-            {pollOptions.map((option) => (
+            {(pollOptions || []).map((option) => (
               <button
                 key={option.id}
                 onClick={() => handleVote(option.id)}
                 disabled={hasVoted}
                 className={cn(
-                  "w-full text-left relative py-1 mb-2",
+                  "relative py-1 mb-2 w-full text-left",
                   showResults ? "cursor-default" : "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800",
                 )}
               >
                 <div className="flex items-center">
                   {showResults && (
                     <div
-                      className="absolute left-0 top-0 bottom-0 bg-blue-100 dark:bg-blue-900 rounded transition-all duration-500"
+                      className="absolute top-0 bottom-0 left-0 bg-blue-100 rounded transition-all duration-500 dark:bg-blue-900"
                       style={{ width: `${option.percentage}%` }}
                     />
                   )}
-                  <div className="relative flex justify-between items-center w-full z-10 px-3 py-2">
+                  <div className="flex relative z-10 justify-between items-center px-3 py-2 w-full">
                     <span className="text-[15px] leading-5 text-gray-900 dark:text-gray-100">{option.text}</span>
                     {showResults && (
                       <span className="text-[13px] leading-4 text-gray-500 dark:text-gray-400 ml-2">
@@ -166,26 +166,26 @@ const Poll = React.forwardRef<HTMLDivElement, PollProps>(
 
           {/* Stats Footer */}
           {stats && (
-            <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800 pt-3">
+            <div className="flex justify-between items-center pt-3 text-gray-500 border-t border-gray-200 dark:text-gray-400 dark:border-gray-800">
               <div className="flex space-x-6">
-                <button className="group flex items-center hover:text-blue-500">
+                <button className="flex items-center group hover:text-blue-500">
                   <Eye className="h-[18px] w-[18px] mr-2" />
                   <span className="text-[13px] leading-4 group-hover:text-blue-500">
                     {stats.views?.toLocaleString()}
                   </span>
                 </button>
                 <button
-                  className={cn("group flex items-center", isLiked ? "text-pink-500" : "hover:text-pink-500")}
+                  className={cn("flex items-center group", isLiked ? "text-pink-500" : "hover:text-pink-500")}
                   onClick={handleLike}
                 >
                   <Heart className={cn("h-[18px] w-[18px] mr-2", isLiked && "fill-current")} />
                   <span
-                    className={cn("text-[13px] leading-4", isLiked ? "text-pink-500" : "group-hover:text-pink-500")}
+                    className={cn("leading-4 text-[13px]", isLiked ? "text-pink-500" : "group-hover:text-pink-500")}
                   >
                     {stats.likes?.toLocaleString()}
                   </span>
                 </button>
-                <button className="group flex items-center hover:text-blue-500">
+                <button className="flex items-center group hover:text-blue-500">
                   <MessageSquare className="h-[18px] w-[18px] mr-2" />
                   <span className="text-[13px] leading-4 group-hover:text-blue-500">
                     {stats.comments?.toLocaleString()}

@@ -28,6 +28,8 @@ export interface ComponentPropConfig {
   hidden?: boolean;
   label?: string;
   description?: string;
+  group?: string;
+  tooltip?: string;
   render?: (
     props: {
       value: any;
@@ -35,6 +37,7 @@ export interface ComponentPropConfig {
       config: ComponentPropConfig;
     }
   ) => React.ReactNode;
+  displayCondition?: (props: Record<string, any>) => boolean;
 }
 
 export type ComponentMap = {
