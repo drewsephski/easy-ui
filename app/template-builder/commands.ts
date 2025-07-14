@@ -1,5 +1,5 @@
 import { COMPONENT_MAP } from './component-mapping';
-import { AppState, Action } from './TemplateBuilder';
+import type { AppState, Action } from './TemplateBuilder';
 import React from 'react';
 
 type CommandAction = (dispatch: React.Dispatch<Action>, state: AppState) => void;

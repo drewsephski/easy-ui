@@ -18,6 +18,9 @@ export default function GlitchText({
   const [displayedText, setDisplayedText] = useState("")
 
   useEffect(() => {
+    if (typeof text !== 'string') {
+      return;
+    }
     let currentIndex = 0
     const fullText = text
     const typingInterval = setInterval(() => {
@@ -33,7 +36,7 @@ export default function GlitchText({
 
   return (
     <div
-      className={`glitch-wrapper ${className} dark:text-white text-black`}
+      className={`text-black glitch-wrapper ${className} dark:text-white`}
       style={{ fontSize: textSize, fontWeight }}
     >
       <div className="glitch" data-text={displayedText}>

@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { Eye, EyeOff, Lock, Unlock, GripVertical, Trash2, Copy } from 'lucide-react';
-import { ComponentType } from './utils';
+import { ComponentData } from '@/contexts/TemplateBuilderContext';
 
 interface LayerRowProps {
-  component: ComponentType;
+  component: ComponentData;
   isSelected: boolean;
   onSelect: (id: string, multiSelect: boolean) => void;
   onVisibilityToggle: (id: string) => void;
@@ -39,7 +39,7 @@ const LayerRow: React.FC<LayerRowProps> = ({
       <GripVertical className="flex-shrink-0 mr-2 text-neutral-500 cursor-grab" size={16} />
       <div className="flex-1 min-w-0">
         <p className={`text-sm font-medium truncate ${isSelected ? 'text-blue-300' : 'text-neutral-300'}`}>
-          {component.type}
+          {component.content}
         </p>
       </div>
       <div className="flex items-center space-x-1">
@@ -82,7 +82,7 @@ const LayerRow: React.FC<LayerRowProps> = ({
 
 
 interface LayersPanelProps {
-  components: ComponentType[];
+  components: ComponentData[];
   selectedIds: string[];
   onSelect: (id: string, multiSelect: boolean) => void;
   onVisibilityToggle: (id: string) => void;

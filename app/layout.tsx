@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { SiteFooter } from "@/components/site-footer"
+import { SiteFooterNew } from "@/components/site-footer-new"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -14,6 +14,7 @@ import { GoogleAnalytics } from "@next/third-parties/google"
 import Script from "next/script"
 import type React from "react"
 import { ClerkProvider } from "@clerk/nextjs"
+import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.easyui.pro"),
@@ -130,6 +131,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <SiteHeader />
             {children}
+            <SiteFooterNew />
             <SiteFooter />
             <TailwindIndicator />
             <Script

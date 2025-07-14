@@ -4,7 +4,21 @@ import { useState, useCallback, useMemo } from 'react';
 import { z } from 'zod';
 import { ComponentPropConfig } from '@/types/template-builder';
 import { cn } from '@/lib/utils';
-import { HelpCircle, RotateCcw, ChevronDown, ChevronRight } from 'lucide-react';
+import {
+  HelpCircle,
+  RotateCcw,
+  ChevronDown,
+  ChevronRight,
+  ArrowUpLeft,
+  ArrowUp,
+  ArrowUpRight,
+  ArrowLeft,
+  CircleDot,
+  ArrowRight,
+  ArrowDownLeft,
+  ArrowDown,
+  ArrowDownRight,
+} from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -12,11 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import {
   FlexGridEditor,
   MarginPaddingEditor,
-  ContainerQueriesPreview,
 } from './visual-editors';
 import { ColorPicker } from './visual-editors/ColorPicker';
 import { TransactionEditor } from './visual-editors/TransactionEditor';
@@ -61,7 +75,10 @@ export function PropertiesPanel({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     General: true,
+    Spacing: true,
     Layout: true,
+    Alignment: true,
+    Position: true,
   });
 
   const parsedProps = useMemo(() => {
@@ -218,50 +235,117 @@ export function PropertiesPanel({
           </div>
 
           <div className="space-y-4">
+            {/* Spacing Group */}
+            <div key="spacing-group">
+              <button className="flex justify-between items-center py-2 w-full text-left transition-colors duration-150 hover:text-foreground" onClick={() => setOpenGroups((prev) => ({ ...prev, Spacing: !prev.Spacing }))}>
+                <h3 className="font-semibold">Spacing</h3>
+                {openGroups['Spacing'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </button>
+              {openGroups['Spacing'] && (
+                <div className="pt-2 space-y-5">
+                  <MarginPaddingEditor
+                    margin={selectedComponent.style.margin || {}}
+                    padding={selectedComponent.style.padding || {}}
+                    onChange={(property, value) => handlePropChange(selectedComponent!.id, `style.${property}`, value)}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Layout Group */}
             <div key="layout-group">
-              <button
-                className="flex justify-between items-center py-2 w-full text-left transition-colors duration-150 hover:text-foreground"
-                onClick={() =>
-                  setOpenGroups((prev) => ({ ...prev, Layout: !prev.Layout }))
-                }
-              >
+              <button className="flex justify-between items-center py-2 w-full text-left transition-colors duration-150 hover:text-foreground" onClick={() => setOpenGroups((prev) => ({ ...prev, Layout: !prev.Layout }))}>
                 <h3 className="font-semibold">Layout</h3>
-                {openGroups['Layout'] ? (
-                  <ChevronDown size={16} className="transition-transform duration-200" />
-                ) : (
-                  <ChevronRight size={16} className="transition-transform duration-200" />
-                )}
+                {openGroups['Layout'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
               </button>
               {openGroups['Layout'] && (
                 <div className="pt-2 space-y-5">
                   <FlexGridEditor
                     display={selectedComponent.style.display}
                     {...selectedComponent.style}
-                    onChange={(prop, value) =>
-                      handlePropChange(selectedComponent!.id, `style.${prop}`, value)
-                    }
-                  />
-                  <MarginPaddingEditor
-                    margin={selectedComponent.style.margin}
-                    padding={selectedComponent.style.padding}
-                    onChange={(type, side, value) =>
-                      handlePropChange(
-                        selectedComponent!.id,
-                        `style.${type}.${side}`,
-                        value
-                      )
-                    }
-                  />
-                  <ContainerQueriesPreview
-                    containerWidth={selectedComponent.style.width}
-                    onWidthChange={(value) =>
-                      handlePropChange(selectedComponent!.id, 'style.width', value)
-                    }
+                    onChange={(prop, value) => handlePropChange(selectedComponent!.id, `style.${prop}`, value)}
                   />
                 </div>
-                )}
-              </div>
+              )}
             </div>
+
+            {/* Alignment Group */}
+            <div key="alignment-group">
+              <button className="flex justify-between items-center py-2 w-full text-left transition-colors duration-150 hover:text-foreground" onClick={() => setOpenGroups((prev) => ({ ...prev, Alignment: !prev.Alignment }))}>
+                <h3 className="font-semibold">Quick Align</h3>
+                {openGroups['Alignment'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </button>
+              {openGroups['Alignment'] && (
+                <div className="pt-2">
+                  <div className="grid grid-cols-3 gap-1 p-1 w-max rounded-md bg-input">
+                    {[
+                      { icon: ArrowUpLeft, justify: 'flex-start', align: 'flex-start' },
+                      { icon: ArrowUp, justify: 'center', align: 'flex-start' },
+                      { icon: ArrowUpRight, justify: 'flex-end', align: 'flex-start' },
+                      { icon: ArrowLeft, justify: 'flex-start', align: 'center' },
+                      { icon: CircleDot, justify: 'center', align: 'center' },
+                      { icon: ArrowRight, justify: 'flex-end', align: 'center' },
+                      { icon: ArrowDownLeft, justify: 'flex-start', align: 'flex-end' },
+                      { icon: ArrowDown, justify: 'center', align: 'flex-end' },
+                      { icon: ArrowDownRight, justify: 'flex-end', align: 'flex-end' },
+                    ].map(({ icon: Icon, justify, align }) => (
+                      <button
+                        key={`${justify}-${align}`}
+                        onClick={() => {
+                          handlePropChange(selectedComponent!.id, 'style.justifyContent', justify);
+                          handlePropChange(selectedComponent!.id, 'style.alignItems', align);
+                        }}
+                        className={cn(
+                          'p-2 rounded-md transition-colors duration-150 hover:bg-neutral-700 text-muted-foreground hover:text-foreground',
+                          selectedComponent.style.justifyContent === justify && selectedComponent.style.alignItems === align && 'bg-blue-500/20 text-blue-300'
+                        )}
+                      >
+                        <Icon size={16} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Position Group */}
+            <div key="position-group">
+              <button className="flex justify-between items-center py-2 w-full text-left transition-colors duration-150 hover:text-foreground" onClick={() => setOpenGroups((prev) => ({ ...prev, Position: !prev.Position }))}>
+                <h3 className="font-semibold">Position</h3>
+                {openGroups['Position'] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              </button>
+              {openGroups['Position'] && (
+                <div className="pt-2 space-y-4">
+                  <Select onValueChange={(value) => handlePropChange(selectedComponent!.id, 'style.position', value)} value={selectedComponent.style.position || 'static'}>
+                    <SelectTrigger className={cn(defaultInputClasses, inputClassName)}>
+                      <SelectValue placeholder="Position" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {['static', 'relative', 'absolute', 'fixed', 'sticky'].map((pos) => (
+                        <SelectItem key={pos} value={pos}>{pos.charAt(0).toUpperCase() + pos.slice(1)}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedComponent.style.position !== 'static' && (
+                    <div className="grid grid-cols-2 gap-2">
+                      {(['top', 'bottom', 'left', 'right'] as const).map((side) => (
+                        <div key={side}>
+                          <label className="text-xs text-muted-foreground">{side.charAt(0).toUpperCase() + side.slice(1)}</label>
+                          <Input
+                            type="text"
+                            value={selectedComponent.style[side] || ''}
+                            onChange={(e) => handlePropChange(selectedComponent!.id, `style.${side}`, e.target.value)}
+                            className={cn(defaultInputClasses, inputClassName, "h-8")}
+                            placeholder="auto"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
           </div>
         </div>
       </div>
