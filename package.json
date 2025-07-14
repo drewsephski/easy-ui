@@ -8,7 +8,7 @@
     "build": "prisma generate && next build",
     "build:registry": "npx bun ./scripts/build.ts",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "typecheck": "tsc --noEmit",
