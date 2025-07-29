@@ -341,4 +341,3 @@ const OverlapDetectionSystem: React.FC<OverlapDetectionProps> = ({
 };
 
 export default React.memo(OverlapDetectionSystem);
-export { type OverlapInfo, type OverlapSuggestion };

@@ -2,10 +2,10 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  AlignLeft, AlignCenter, AlignRight, 
+import {
+  AlignLeft, AlignCenter, AlignRight,
   AlignVerticalJustifyStart, AlignVerticalJustifyCenter, AlignVerticalJustifyEnd,
-  DistributeHorizontal, DistributeVertical,
+  AlignHorizontalDistributeCenter as DistributeHorizontal, AlignVerticalDistributeCenter as DistributeVertical,
   Undo2, Eye, EyeOff
 } from 'lucide-react';
 import { ComponentData } from '@/contexts/TemplateBuilderContext';
@@ -456,4 +456,3 @@ const AlignmentTools: React.FC<AlignmentToolsProps> = ({
 };
 
 export default React.memo(AlignmentTools);
-export { type AlignmentOperation };

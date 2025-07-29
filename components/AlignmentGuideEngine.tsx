@@ -4,7 +4,7 @@ import React, { useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ComponentData } from '@/contexts/TemplateBuilderContext';
 
-export interface AlignmentGuide {
+interface AlignmentGuide {
   id: string;
   type: 'horizontal' | 'vertical';
   position: number;
@@ -15,7 +15,7 @@ export interface AlignmentGuide {
   alignmentType: AlignmentType;
 }
 
-export type AlignmentType = 
+type AlignmentType =
   | 'left-to-left' | 'right-to-right' | 'center-to-center'
   | 'top-to-top' | 'bottom-to-bottom' | 'middle-to-middle'
   | 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top';
