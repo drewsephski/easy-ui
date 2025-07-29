@@ -23,6 +23,7 @@ import SparkleButton from "@/components/easyui/sparkle-button"
 import ShowcaseGrid from "@/components/showcase"
 import ROISection from "@/components/ROISection"
 import { HoverButton } from "@/components/easyui/hover-button"
+import IntroSection from "@/components/IntroSection"
 // Corrected the path for FAQPage import
 
 export default function IndexPage() {
@@ -102,7 +103,7 @@ export default function IndexPage() {
           </motion.div>
         <ShowcaseGrid />
 
-        <MarqueeDemo />
+        <IntroSection />
       </div>
 
 

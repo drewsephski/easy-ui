@@ -81,10 +81,10 @@ const EasyHero: React.FC<EasyHeroProps> = ({ title, subtext, heroimage }) => {
           <header className="relative mb-0 px-4 sm:px-0 lg:px-8">
             <div className="max-w-full mx-auto">
               <div className="flex justify-between items-start">
-                <h1 className="max-w-full text-balance bg-gradient-to-br from-black from-30% to-black/60 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight sm:leading-none tracking-tighter text-transparent dark:from-white dark:to-white/40">
-                  Starting your{" "}
+                <h1 className="max-w-full text-balance bg-gradient-to-br from-black from-[30%] to-black/60 bg-clip-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight sm:leading-none tracking-tighter text-transparent dark:from-white dark:to-white/40and ">
+                  Growing your{" "}
                   <span className="inline-block bg-black dark:bg-white dark:text-black text-white px-3 sm:px-5 rounded-full my-2">
-                    Next Project ?
+                    Business ?
                   </span>{" "}
                   Don&apos;t start from scratch
                 </h1>
@@ -93,13 +93,13 @@ const EasyHero: React.FC<EasyHeroProps> = ({ title, subtext, heroimage }) => {
           </header>
           <div className="flex flex-row gap-0">
             <p className="mb-4 leading-7 mt-7 tracking-normal sm:max-w-xl md:max-w-[27.5rem] lg:max-w-[35.5rem] dark:text-gray-300 max-w-4xl text-gray-800 text-lg lg:text-xl">
-              Kickstart with{" "}
+              Kickstart in minutes with{" "}
               <span className="font-semibold">beautifully designed </span>
               website templates built with{" "}
               <span className="font-semibold">
-                React, Typescript, Tailwind CSS,  
+                Modern Technologies. <br/>  
               </span>{" "}
-              and <span className="font-semibold">Shadcn UI, Framer Motion</span>.
+              <span className="font-semibold"> No Code Required</span>.
             </p>
           </div>
         </main>

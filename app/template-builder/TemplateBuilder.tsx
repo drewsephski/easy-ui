@@ -31,9 +31,16 @@ import {
 import { staticCommands, getDynamicCommands } from './commands';
 import { TemplateBuilderProvider, useTemplateBuilder, ComponentData } from '@/contexts/TemplateBuilderContext';
 import ResizableDraggableComponent from '@/components/ResizableDraggableComponent';
-import { CustomDragLayer } from '@/components/CustomDragLayer';
+import { EnhancedDragLayer } from '@/components/EnhancedDragLayer';
+import { RobustDropZone } from '@/components/RobustDragDropSystem';
 import SmartGuides from '@/components/SmartGuides';
 import ContextMenu from '@/components/ContextMenu';
+import RectangleSelector from '@/components/RectangleSelector';
+import SelectionManager, { useSelectionManager } from '@/components/SelectionManager';
+import UnifiedBoundingBox from '@/components/UnifiedBoundingBox';
+import GroupOperations, { useGroupOperations } from '@/components/GroupOperations';
+import { components } from '../blog/[slug]/mdx-components';
+
 
 // --- INTERFACES ---
 export interface ComponentDefinition {
@@ -92,42 +99,116 @@ const Tooltip: FC<{ children: React.ReactNode; text: string }> = ({ children, te
 const SidebarComponent: FC<{ type: string; definition: ComponentDefinition; onToggleFavorite: (type: string) => void; }> = ({ type, definition, onToggleFavorite }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.COMPONENT,
-    item: { id: type, type: ItemTypes.COMPONENT },
+    item: { 
+      id: type, 
+      type: ItemTypes.COMPONENT,
+      dimensions: definition.defaultSize,
+      displayName: definition.displayName,
+      componentType: type
+    },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
-  }));
+  }), [type, definition]);
 
   const Comp = definition.component;
 
   return (
-    <div
+    <motion.div
       ref={drag as any}
       className={cn(
-        "relative group flex flex-col justify-center items-center p-2 rounded-lg cursor-move transition-all duration-200 ease-in-out",
-        "bg-neutral-900 border border-neutral-800 hover:bg-neutral-800/80 hover:border-indigo-500/50",
-        isDragging && "opacity-40 scale-95"
+        "relative group flex flex-col justify-center items-center p-3 rounded-lg cursor-move",
+        "bg-neutral-900 border border-neutral-800",
+        isDragging && "opacity-40"
       )}
+      whileHover={{
+        scale: 1.02,
+        backgroundColor: "rgba(64, 64, 64, 0.8)",
+        borderColor: "rgba(99, 102, 241, 0.5)",
+        transition: { duration: 0.2 }
+      }}
+      whileTap={{ scale: 0.98 }}
+      animate={{
+        scale: isDragging ? 0.95 : 1,
+        opacity: isDragging ? 0.4 : 1,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 25,
+        duration: 0.15
+      }}
+      layout
     >
-      <button
+      <motion.button
         onClick={(e) => { e.stopPropagation(); onToggleFavorite(type); }}
         className={cn(
           "absolute top-2 right-2 z-10 p-1 rounded-full transition-colors",
           "text-neutral-500 hover:text-amber-400 bg-neutral-800/50 hover:bg-neutral-700",
           definition.isFavorite && "text-amber-400"
         )}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        animate={{
+          color: definition.isFavorite ? "#fbbf24" : "#6b7280",
+        }}
+        transition={{ duration: 0.2 }}
       >
-        <Star size={14} fill={definition.isFavorite ? 'currentColor' : 'none'} />
-      </button>
-      <div className="flex overflow-hidden justify-center items-center mb-2 w-full h-20 rounded-md bg-neutral-950/50">
-        <div className="transform scale-[0.25] origin-center">
+        <motion.div
+          animate={{ rotate: definition.isFavorite ? [0, -10, 10, 0] : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Star size={14} fill={definition.isFavorite ? 'currentColor' : 'none'} />
+        </motion.div>
+      </motion.button>
+
+      <motion.div
+        className="flex overflow-hidden justify-center items-center mb-3 w-full h-20 rounded-md bg-neutral-950/50"
+        whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+        transition={{ duration: 0.2 }}
+      >
+        <motion.div
+          className="transform scale-[0.25] origin-center"
+          whileHover={{ scale: 0.3 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        >
           <Comp {...definition.defaultProps} />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+
       <div className="w-full text-center">
-        <h3 className="text-xs font-medium truncate text-neutral-200">{definition.displayName}</h3>
-        <p className="text-xs truncate text-neutral-500">{definition.description}</p>
+        <motion.h3
+          className="text-xs font-medium truncate text-neutral-200"
+          whileHover={{ color: "#e5e7eb" }}
+        >
+          {definition.displayName}
+        </motion.h3>
+        <motion.p
+          className="text-xs truncate text-neutral-500"
+          whileHover={{ color: "#9ca3af" }}
+        >
+          {definition.description}
+        </motion.p>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t to-transparent opacity-0 transition-opacity from-black/20 group-hover:opacity-100" />
-    </div>
+
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-t to-transparent from-black/20 rounded-lg"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      />
+
+      {/* Drag indicator */}
+      <AnimatePresence>
+        {isDragging && (
+          <motion.div
+            className="absolute inset-0 border-2 border-dashed border-blue-400 rounded-lg bg-blue-400/10"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+          />
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
@@ -138,8 +219,8 @@ const TemplateBuilderInternal: FC = () => {
     selectedComponentIds,
     addComponent,
     moveComponent,
-    selectComponent,
-    clearSelection,
+    selectComponent: originalSelectComponent,
+    clearSelection: originalClearSelection,
     deleteComponent,
     updateComponent, // Assuming this will be needed for props, visibility, etc.
     reorderComponent,
@@ -150,6 +231,32 @@ const TemplateBuilderInternal: FC = () => {
     zoom,
     setZoom,
   } = useTemplateBuilder();
+
+  // Use the enhanced SelectionManager
+  const {
+    selectionState,
+    selectComponent,
+    selectAll,
+    clearSelection,
+    selectMultiple,
+    undoSelection,
+    redoSelection,
+    canUndo,
+    canRedo,
+    getSelectionBounds,
+  } = useSelectionManager(components, selectedComponentIds);
+
+  // Use GroupOperations for advanced group manipulation
+  const selectedComponents = components.filter(c => selectionState.selectedComponentIds.includes(c.id));
+  const {
+    moveGroup,
+    resizeGroup,
+    rotateGroup,
+    alignComponents,
+    distributeComponents,
+    createGroup,
+    ungroup,
+  } = useGroupOperations(selectedComponents, updateComponent);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
   const [showGrid, setShowGrid] = useState(true);
@@ -161,16 +268,17 @@ const TemplateBuilderInternal: FC = () => {
   const [horizontalGuides, setHorizontalGuides] = useState<number[]>([]);
   const [verticalGuides, setVerticalGuides] = useState<number[]>([]);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; componentId: string; } | null>(null);
+  const [isRectangleSelectionActive, setIsRectangleSelectionActive] = useState(true);
 
   const { generateCssProperties } = useTheme();
   const { isOpen, setIsOpen } = useCommandPalette();
 
   useHotkeys("mod+k", (e) => { e.preventDefault(); setIsOpen(!isOpen); });
   useHotkeys('backspace, delete', () => {
-    if (selectedComponentIds.length > 0) {
-      selectedComponentIds.forEach(id => deleteComponent(id));
+    if (selectionState.selectedComponentIds.length > 0) {
+      selectionState.selectedComponentIds.forEach(id => deleteComponent(id));
     }
-  }, [selectedComponentIds, deleteComponent]);
+  }, [selectionState.selectedComponentIds, deleteComponent]);
 
   useEffect(() => {
     const styleElement = document.createElement('style');
@@ -182,34 +290,7 @@ const TemplateBuilderInternal: FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const panStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: [ItemTypes.COMPONENT, ItemTypes.CANVAS_OBJECT],
-    drop: (item: DropItem, monitor) => {
-      const canvasBounds = canvasRef.current?.getBoundingClientRect();
-      const dropPos = monitor.getClientOffset();
-      if (!canvasBounds || !dropPos) return;
 
-      const x = (dropPos.x - canvasBounds.left - pan.x) / zoom;
-      const y = (dropPos.y - canvasBounds.top - pan.y) / zoom;
-
-      if (item.type === ItemTypes.COMPONENT) {
-        addComponent(item.id as ComponentId, { x, y });
-      } else if (item.type === ItemTypes.CANVAS_OBJECT) {
-        const initialPos = monitor.getInitialSourceClientOffset();
-        const currentPos = monitor.getSourceClientOffset();
-        if (!initialPos || !currentPos) return;
-
-        const deltaX = (currentPos.x - initialPos.x) / zoom;
-        const deltaY = (currentPos.y - initialPos.y) / zoom;
-
-        moveComponent(item.id as string, {
-          x: item.x! + deltaX,
-          y: item.y! + deltaY,
-        });
-      }
-    },
-    collect: monitor => ({ isOver: monitor.isOver() }),
-  }), [pan, zoom, addComponent, moveComponent]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -279,7 +360,7 @@ const TemplateBuilderInternal: FC = () => {
     }
   }, [components, updateComponent]);
 
-  const selectedComponent = selectedComponentIds.length === 1 ? components.find(c => c.id === selectedComponentIds[0]) || null : null;
+  const selectedComponent = selectionState.selectedComponentIds.length === 1 ? components.find(c => c.id === selectionState.selectedComponentIds[0]) || null : null;
 
   const handleLayerVisibility = useCallback((id: string) => {
     const component = components.find(c => c.id === id);
@@ -312,6 +393,82 @@ const TemplateBuilderInternal: FC = () => {
     });
   }, []);
 
+  const handleRectangleSelection = useCallback((selectedComponentIds: string[]) => {
+    selectMultiple(selectedComponentIds);
+  }, [selectMultiple]);
+
+  // Group manipulation handlers for UnifiedBoundingBox
+  const handleGroupMove = useCallback((deltaX: number, deltaY: number) => {
+    const selectedComponents = components.filter(c => selectionState.selectedComponentIds.includes(c.id));
+    selectedComponents.forEach(component => {
+      moveComponent(component.id, {
+        x: component.x + deltaX,
+        y: component.y + deltaY,
+      });
+    });
+  }, [components, selectionState.selectedComponentIds, moveComponent]);
+
+  const handleGroupResize = useCallback((
+    deltaX: number,
+    deltaY: number,
+    deltaWidth: number,
+    deltaHeight: number,
+    handle: string
+  ) => {
+    const selectedComponents = components.filter(c => selectionState.selectedComponentIds.includes(c.id));
+
+    // Calculate the bounding box of selected components
+    if (selectedComponents.length === 0) return;
+
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    selectedComponents.forEach(comp => {
+      minX = Math.min(minX, comp.x);
+      minY = Math.min(minY, comp.y);
+      maxX = Math.max(maxX, comp.x + comp.width);
+      maxY = Math.max(maxY, comp.y + comp.height);
+    });
+
+    const originalWidth = maxX - minX;
+    const originalHeight = maxY - minY;
+    const newWidth = originalWidth + deltaWidth;
+    const newHeight = originalHeight + deltaHeight;
+
+    if (newWidth <= 0 || newHeight <= 0) return;
+
+    const scaleX = newWidth / originalWidth;
+    const scaleY = newHeight / originalHeight;
+
+    // Apply proportional scaling to each component
+    selectedComponents.forEach(component => {
+      const relativeX = component.x - minX;
+      const relativeY = component.y - minY;
+
+      const newX = minX + deltaX + (relativeX * scaleX);
+      const newY = minY + deltaY + (relativeY * scaleY);
+      const newComponentWidth = component.width * scaleX;
+      const newComponentHeight = component.height * scaleY;
+
+      updateComponent(component.id, {
+        x: newX,
+        y: newY,
+        width: Math.max(10, newComponentWidth), // Minimum width
+        height: Math.max(10, newComponentHeight), // Minimum height
+      });
+    });
+  }, [components, selectionState.selectedComponentIds, updateComponent]);
+
+  const handleGroupRotate = useCallback((rotation: number, centerX: number, centerY: number) => {
+    const selectedComponents = components.filter(c => selectionState.selectedComponentIds.includes(c.id));
+
+    selectedComponents.forEach(component => {
+      // For now, just update the rotation of each component
+      // In a more advanced implementation, we would rotate around the group center
+      updateComponent(component.id, {
+        rotation: rotation,
+      });
+    });
+  }, [components, selectionState.selectedComponentIds, updateComponent]);
+
   return (
     <div className="flex overflow-hidden w-full h-screen font-sans text-foreground bg-background">
       <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -325,7 +482,7 @@ const TemplateBuilderInternal: FC = () => {
       {/* Left Sidebar */}
       <aside className={cn("flex flex-col border-r transition-all duration-300 bg-sidebar-background border-sidebar-border", isLeftSidebarCollapsed ? "w-0" : "w-80")}>
         <div className={cn("p-4 border-b border-sidebar-border", isLeftSidebarCollapsed ? "hidden" : "block")}>
-          <h2 className="flex items-center text-base font-semibold"><ComponentIcon size={18} className="mr-2 text-blue-400"/> Components</h2>
+          <h2 className="flex items-center text-base font-semibold"><ComponentIcon size={18} className="mr-2 text-blue-400" /> Components</h2>
           <div className="relative mt-4">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -333,16 +490,14 @@ const TemplateBuilderInternal: FC = () => {
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="py-2 pr-3 pl-9 w-full text-sm rounded-md border transition-colors bg-input border-border focus:bg-background focus:border-ring focus:outline-none"
-            />
+              className="py-2 pr-3 pl-9 w-full text-sm rounded-md border transition-colors bg-input border-border focus:bg-background focus:border-ring focus:outline-none" />
           </div>
         </div>
         <div className={cn("overflow-y-auto flex-1 p-2", isLeftSidebarCollapsed ? "hidden" : "block")}>
           <ComponentLibrary
             componentMap={componentMap}
             searchTerm={searchTerm}
-            onToggleFavorite={handleToggleFavorite}
-          />
+            onToggleFavorite={handleToggleFavorite} />
         </div>
       </aside>
 
@@ -357,60 +512,92 @@ const TemplateBuilderInternal: FC = () => {
         <header className="flex z-10 flex-shrink-0 justify-between items-center px-4 h-14 border-b bg-sidebar-background border-sidebar-border">
           <div className="flex gap-2 items-center">
             <Tooltip text="Undo (Cmd+Z)">
-              <button className="p-2 rounded-md transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed text-muted-foreground hover:text-foreground"><Undo2 size={18}/></button>
+              <button className="p-2 rounded-md transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed text-muted-foreground hover:text-foreground"><Undo2 size={18} /></button>
             </Tooltip>
             <Tooltip text="Redo (Cmd+Shift+Z)">
-              <button className="p-2 rounded-md transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed text-muted-foreground hover:text-foreground"><Redo2 size={18}/></button>
+              <button className="p-2 rounded-md transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed text-muted-foreground hover:text-foreground"><Redo2 size={18} /></button>
             </Tooltip>
             <div className="w-px h-6 bg-border" />
             <Tooltip text="Delete (Backspace)">
-              <button onClick={() => selectedComponentIds.forEach(id => deleteComponent(id))} disabled={selectedComponentIds.length === 0} className="p-2 rounded-md transition-colors hover:bg-red-500/20 text-muted-foreground hover:text-red-400 disabled:opacity-40 disabled:cursor-not-allowed"><Trash2 size={18}/></button>
+              <button onClick={() => selectionState.selectedComponentIds.forEach(id => deleteComponent(id))} disabled={selectionState.selectedComponentIds.length === 0} className="p-2 rounded-md transition-colors hover:bg-red-500/20 text-muted-foreground hover:text-red-400 disabled:opacity-40 disabled:cursor-not-allowed"><Trash2 size={18} /></button>
             </Tooltip>
           </div>
           <div className="flex gap-4 items-center">
             <Tooltip text="Toggle Grid">
               <button onClick={() => setShowGrid(!showGrid)} className={`p-2 rounded-md transition-colors ${showGrid ? 'text-blue-400 bg-blue-500/20' : 'text-muted-foreground hover:bg-neutral-800 hover:text-foreground'}`}>
-                <Grid3X3 size={18}/>
+                <Grid3X3 size={18} />
               </button>
             </Tooltip>
             <div className="flex items-center p-1 rounded-md bg-input">
               <Tooltip text="Zoom Out">
-                <button onClick={() => setZoom(Math.max(0.1, zoom - 0.1))} className="p-1.5 rounded transition-colors text-muted-foreground hover:bg-neutral-700 hover:text-foreground"><ZoomOut size={16}/></button>
+                <button onClick={() => setZoom(Math.max(0.1, zoom - 0.1))} className="p-1.5 rounded transition-colors text-muted-foreground hover:bg-neutral-700 hover:text-foreground"><ZoomOut size={16} /></button>
               </Tooltip>
               <span className="w-16 text-sm font-medium text-center cursor-pointer text-foreground" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</span>
               <Tooltip text="Zoom In">
-                <button onClick={() => setZoom(Math.min(4, zoom + 0.1))} className="p-1.5 rounded transition-colors text-muted-foreground hover:bg-neutral-700 hover:text-foreground"><ZoomIn size={16}/></button>
+                <button onClick={() => setZoom(Math.min(4, zoom + 0.1))} className="p-1.5 rounded transition-colors text-muted-foreground hover:bg-neutral-700 hover:text-foreground"><ZoomIn size={16} /></button>
               </Tooltip>
             </div>
           </div>
         </header>
 
         <div ref={canvasRef} className="overflow-hidden relative flex-1 min-h-0 bg-background" style={{ cursor: isPanning ? 'grabbing' : 'default' }}>
-          <div
-            ref={drop as any}
-            className="absolute top-0 left-0 w-full h-full canvas-bg"
-            onClick={() => clearSelection()}
-            style={{
-              transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-              transformOrigin: '0 0',
-              backgroundColor: isOver ? 'rgba(79, 70, 229, 0.1)' : 'transparent',
-              transition: 'background-color 150ms ease',
-              ...(showGrid && {
-                backgroundSize: `${GRID_SIZE}px ${GRID_SIZE}px`,
-                backgroundImage: `linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)`,
-              })
+          <RobustDropZone
+            onDrop={(item, position) => {
+              console.log('TemplateBuilder onDrop:', item, position);
+              if (item.type === 'component' || item.type === 'COMPONENT') {
+                addComponent(item.id as ComponentId, position);
+              } else if (item.type === 'canvas_object' || item.type === 'CANVAS_OBJECT') {
+                moveComponent(item.id as string, position);
+              }
             }}
+            components={components}
+            zoom={zoom}
+            pan={pan}
+            showGrid={showGrid}
+            gridSize={GRID_SIZE}
+            snapToGrid={true}
+            className="absolute top-0 left-0 w-full h-full"
           >
-            {components.map(comp => (
-              <ResizableDraggableComponent
-                key={comp.id}
-                component={comp}
-                zoom={zoom}
-                onContextMenu={(e) => handleContextMenu(e, comp.id)}
-              />
-            ))}
-            <SmartGuides horizontalGuides={horizontalGuides} verticalGuides={verticalGuides} />
-          </div>
+            <motion.div
+              className="absolute top-0 left-0 w-full h-full canvas-bg"
+              onClick={() => clearSelection()}
+              style={{
+                transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                transformOrigin: '0 0',
+                ...(showGrid && {
+                  backgroundSize: `${GRID_SIZE}px ${GRID_SIZE}px`,
+                  backgroundImage: `linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)`,
+                })
+              }}
+            >
+              {components.map(comp => (
+                <ResizableDraggableComponent
+                  key={comp.id}
+                  component={comp}
+                  zoom={zoom}
+                  onContextMenu={(e) => handleContextMenu(e, comp.id)} />
+              ))}
+              <SmartGuides horizontalGuides={horizontalGuides} verticalGuides={verticalGuides} />
+            </motion.div>
+          </RobustDropZone>
+
+          {/* Rectangle Selection Overlay */}
+          <RectangleSelector
+            onSelectionComplete={handleRectangleSelection}
+            isActive={isRectangleSelectionActive}
+            components={components}
+            zoom={zoom}
+            pan={pan} />
+
+          {/* Unified Bounding Box for Multi-Selection */}
+          <UnifiedBoundingBox
+            selectedComponents={components.filter(c => selectionState.selectedComponentIds.includes(c.id))}
+            zoom={zoom}
+            pan={pan}
+            onGroupMove={handleGroupMove}
+            onGroupResize={handleGroupResize}
+            onGroupRotate={handleGroupRotate}
+            showHandles={selectionState.selectedComponentIds.length > 1} />
           {contextMenu && (
             <ContextMenu
               x={contextMenu.x}
@@ -422,8 +609,7 @@ const TemplateBuilderInternal: FC = () => {
                 { label: 'Delete', action: () => { deleteComponent(contextMenu.componentId); closeContextMenu(); } },
                 { label: 'Bring to Front', action: () => { bringToFront(contextMenu.componentId); closeContextMenu(); } },
                 { label: 'Send to Back', action: () => { sendToBack(contextMenu.componentId); closeContextMenu(); } },
-              ]}
-            />
+              ]} />
           )}
         </div>
         <SmartGuidesLayer setHorizontalGuides={setHorizontalGuides} setVerticalGuides={setVerticalGuides} />
@@ -454,11 +640,23 @@ const TemplateBuilderInternal: FC = () => {
                   handlePropChange={handlePropChange}
                   onClear={clearSelection}
                 />
+              ) : selectionState.selectedComponentIds.length > 1 ? (
+                <div className="space-y-4">
+                  <div className="flex flex-col items-center text-center text-neutral-500">
+                    <Settings size={32} className="mb-3 text-neutral-600" />
+                    <p className="font-semibold text-neutral-400">Group Operations</p>
+                    <p className="text-xs text-neutral-500">{selectionState.selectedComponentIds.length} items selected</p>
+                  </div>
+                  <GroupOperations
+                    selectedComponents={selectedComponents}
+                    onUpdateComponent={updateComponent}
+                  />
+                </div>
               ) : (
                 <div className="flex flex-col justify-center items-center h-full text-center text-neutral-500">
                   <Settings size={32} className="mb-3 text-neutral-600" />
                   <p className="font-semibold text-neutral-400">Properties</p>
-                  <p className="text-xs text-neutral-500">{selectedComponentIds.length > 1 ? `${selectedComponentIds.length} items selected` : "Select a layer to edit."}</p>
+                  <p className="text-xs text-neutral-500">Select a layer to edit.</p>
                 </div>
               )}
             </div>
@@ -467,7 +665,7 @@ const TemplateBuilderInternal: FC = () => {
           {activeTab === 'layers' && (
             <LayersPanel
               components={components}
-              selectedIds={selectedComponentIds}
+              selectedIds={selectionState.selectedComponentIds}
               onSelect={selectComponent}
               onVisibilityToggle={handleLayerVisibility}
               onLockToggle={handleLayerLock}
@@ -493,7 +691,11 @@ const TemplateBuilder: FC = () => (
     <ThemeProvider>
       <TemplateBuilderProvider>
         <TemplateBuilderInternal />
-        <CustomDragLayer />
+        <EnhancedDragLayer 
+          zoom={1} 
+          showPreview={true}
+          showMeasurements={true}
+        />
       </TemplateBuilderProvider>
     </ThemeProvider>
   </DndProvider>
